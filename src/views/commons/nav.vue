@@ -77,7 +77,6 @@
     .el-menu-nav {
         background-color: $mainColor;
         height: $navMenu;
-
         .el-menu-item:hover {
             background-color: $mainColor;
         }
