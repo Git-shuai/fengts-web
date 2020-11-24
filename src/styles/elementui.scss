@@ -1,0 +1,18 @@
+@import "./config.scss";
+.el-menu--horizontal>.el-menu-item{
+  float: left;
+  height: $navMenu;
+  line-height: $navMenu;
+  background-color: $mainColor;
+  &.is-active{
+    border-bottom: 0 solid !important;
+  }
+}
+.el-menu-item{
+  font-size: 20px;
+  margin: 0 8px;
+}
+
+.el-menu{
+  background-color: $mainColor;
+}

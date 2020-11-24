@@ -1,0 +1,37 @@
+//后台框架的尺寸
+////菜单宽度
+//$navMenu: 230px;
+//$navMenuMin: 64px;
+//$layoutHeader: 75px;
+
+
+//导航宽度
+$navMenu: 65px;
+//主颜色
+$mainColor: #fff;
+$mainColor1: #83b99e;
+
+
+
+
+
+
+@mixin webkit($type,$value) {
+  -webkit-#{$type}: $value;
+  -moz-#{$type}: $value;
+  -o-#{$type}: $value;
+  -ms-#{$type}: $value;
+  #{$type}: $value;
+}
+
+@mixin labelDemo($align,$width,$line-height: "normal") {
+  label {
+    float: left;
+    text-align: $align;
+    width: $width + px;
+    line-height: $line-height + px;
+  }
+  .wrap-content {
+    margin-left: $width + px;
+  }
+}
