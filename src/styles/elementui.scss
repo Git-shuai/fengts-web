@@ -16,3 +16,16 @@
 .el-menu{
   background-color: $mainColor;
 }
+//标签页样式修改
+.el-tabs__item{
+  height: 60px;
+  line-height: 60px;
+  padding: 0 55px;
+  font-size: 35px;
+  //font-family: "新宋体";
+  text-align:center;
+  width: 100%;
+}
+.el-form-item{
+  margin-bottom: 15px;
+}

@@ -12,7 +12,11 @@ import 'swiper/swiper-bundle.css'
 import "./assets/icon/iconfont.css";
 //路由守卫
 import "./router/premit";
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
+
+Vue.use(VueAxios, axios);
 Vue.use(Animated);
 Vue.use(ElementUI);
 Vue.use(VueAwesomeSwiper);
