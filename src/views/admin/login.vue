@@ -10,7 +10,7 @@
                 </el-col>
                 <div class="segmentation"></div>
                 <el-col :span="5">
-                    <h1 class="h1-login">个人网站后台登录</h1>
+                    <h1 class="h1-login">个人网站登录</h1>
                 </el-col>
             </el-row>
 
@@ -25,11 +25,12 @@
                 </el-col>
                 <el-col :offset="3" :span="10">
                     <div class="login-main">
-                        <el-tabs  type="card" v-model="activeName" @tab-click="handleClick">
-                            <el-tab-pane  label="登录"  name="login">
+                        <el-tabs  type="card" v-model="activeName" @tab-click="resetForm('ruleForm')">
+                            <el-tab-pane   label="登录"  name="login">
                                 <div class="login-form">
                                     <!--登录表单-->
                                     <el-form
+                                            :rules="rules"
                                             label-position="top"
                                             :model="ruleForm"
                                             status-icon
@@ -42,10 +43,10 @@
                                         <el-form-item label="密码" prop="password">
                                             <el-input type="password" v-model="ruleForm.password" placeholder="6-18位数字、字母组合" autocomplete="off" clearable></el-input>
                                         </el-form-item>
-                                        <el-form-item label="验证码" prop="password">
+                                        <el-form-item label="验证码" prop="code">
                                             <el-row :gutter="20">
                                                 <el-col :span="16">
-                                                    <el-input type="password" v-model="ruleForm.password" placeholder="" autocomplete="off" clearable></el-input>
+                                                    <el-input type="code" v-model="ruleForm.code" placeholder="6位数字" autocomplete="off" clearable></el-input>
                                                 </el-col>
                                                 <el-col :span="8">
                                                     <el-button type="success" class="block" @click="submitForm('ruleForm')">获取验证码</el-button>
@@ -55,16 +56,15 @@
                                         <div class="placeholder-div"></div>
                                         <el-form-item>
                                             <el-row :gutter="10">
-                                                <el-col :span="12">
-                                                    <el-button class="block" type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                                                <el-col :span="24">
+                                                    <el-button class="block" type="danger" @click="submitForm('ruleForm')">登录</el-button>
                                                 </el-col>
-                                                <el-col :span="12">
-                                                    <el-button class="block" @click="resetForm('ruleForm')">重置</el-button>
-                                                </el-col>
+<!--                                                <el-col :span="12">-->
+<!--                                                    <el-button class="block" @click="resetForm('ruleForm')">重置</el-button>-->
+<!--                                                </el-col>-->
                                             </el-row>
                                         </el-form-item>
                                     </el-form>
-
                                 </div>
                                 <div class="fast-login">
                                     <el-row>
@@ -83,10 +83,11 @@
                                     </el-row>
                                 </div>
                             </el-tab-pane>
-                            <el-tab-pane  label="注册" name="registered">
+                            <el-tab-pane   label="注册" name="registered">
                                 <div class="login-form">
                                     <!--登录表单-->
                                     <el-form
+                                            :rules="rules"
                                             label-position="top"
                                             :model="ruleForm"
                                             status-icon
@@ -99,13 +100,13 @@
                                         <el-form-item label="密码" prop="password">
                                             <el-input type="password" v-model="ruleForm.password" placeholder="6-18位数字、字母组合" autocomplete="off" clearable></el-input>
                                         </el-form-item>
-                                        <el-form-item label="确认密码" prop="password">
-                                            <el-input type="password" v-model="ruleForm.password" placeholder="6-18位数字、字母组合" autocomplete="off" clearable></el-input>
+                                        <el-form-item label="确认密码" prop="newPassword">
+                                            <el-input type="newPassword" v-model="ruleForm.newPassword" placeholder="6-18位数字、字母组合" autocomplete="off" clearable></el-input>
                                         </el-form-item>
-                                        <el-form-item label="验证码" prop="password">
+                                        <el-form-item label="验证码" prop="code">
                                             <el-row :gutter="20">
                                                 <el-col :span="16">
-                                                    <el-input type="password" v-model="ruleForm.password" placeholder="" autocomplete="off" clearable></el-input>
+                                                    <el-input type="code" v-model="ruleForm.code" placeholder="" autocomplete="off" clearable></el-input>
                                                 </el-col>
                                                 <el-col :span="8">
                                                     <el-button type="success" class="block" @click="submitForm('ruleForm')">获取验证码</el-button>
@@ -116,10 +117,10 @@
                                         <el-form-item>
                                             <el-row :gutter="10">
                                                 <el-col :span="12">
-                                                    <el-button class="block" type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                                                    <el-button class="block" type="danger" @click="submitForm('ruleForm')">登录</el-button>
                                                 </el-col>
                                                 <el-col :span="12">
-                                                    <el-button class="block" @click="resetForm('ruleForm')">重置</el-button>
+                                                    <el-button class="block" type="info" @click="resetForm('ruleForm')">重置</el-button>
                                                 </el-col>
                                             </el-row>
                                         </el-form-item>
@@ -137,14 +138,86 @@
 </template>
 
 <script>
+    import {validateEmail,validatePwd,validateCode} from "../../utils/validate";
     export default {
         name: "login",
         data() {
+            //判断用户名
+            let validateUsername = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入用户名'));
+                }else if(validateEmail(value)){
+                    callback(new Error('用户名格式错误'));
+                }else {
+                    if (this.ruleForm.password !== '') {
+                        this.$refs.ruleForm.validateField('username');
+                    }
+                    callback();
+                }
+            };
+            //判断密码
+            let validatePassword = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入密码'));
+                }else if(validatePwd(value)){
+                    callback(new Error('密码格式错误'));
+                } else {
+                    if (this.ruleForm.password !== '') {
+                        this.$refs.ruleForm.validateField('password');
+                    }
+                    callback();
+                }
+            };
+            //判断确认密码
+            let validateNewPassword = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入确认密码'));
+                }else if(validatePwd(value)){
+                    callback(new Error('密码格式错误'));
+                }else if(value !== this.ruleForm.password){
+                    callback(new Error('密码不一致'));
+                }else {
+                    if (this.ruleForm.password !== '') {
+                        this.$refs.ruleForm.validateField('newPassword');
+                    }
+                    callback();
+                }
+            };
+            //判断验证码
+            let validateVCode = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入验证码'));
+                }else if (validateCode(value)){
+                    callback(new Error('验证码格式错误'));
+                }else {
+                    if (this.ruleForm.password !== '') {
+                        this.$refs.ruleForm.validateField('code');
+                    }
+                    callback();
+                }
+            };
 
             return {
                 ruleForm: {
                     username: '',
-                    password: ''
+                    password: '',
+                    newPassword:"",
+                    code: ""
+                },
+                //登陆表单验证
+                rules: {
+                    username: [
+                        { validator: validateUsername, trigger: 'blur' }
+                    ],
+                    password: [
+                        { validator: validatePassword, trigger: 'blur' }
+                    ],
+                    newPassword: [
+                        { validator: validateNewPassword, trigger: 'blur' }
+                    ],
+                    code: [
+                        { validator: validateVCode, trigger: 'blur' }
+                    ]
                 },
                 activeName: 'login',
             };
@@ -214,10 +287,10 @@
         }
 
         .login-main {
-            margin: 60px;
+            margin-top: 150px;
             background-color: $mainColor;
             opacity: 85%;
-            width: 600px;
+            width: 500px;
             height: auto;
         }
     }
