@@ -164,7 +164,7 @@
 
 <script>
     import {validateEmail, validatePwd, validateCode} from "../../utils/validate";
-
+    import Vue from "vue";
     export default {
         name: "login",
         data() {
