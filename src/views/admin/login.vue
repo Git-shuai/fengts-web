@@ -20,48 +20,59 @@
             <el-row :gutter="60">
                 <el-col :span="7">
                     <div class="img-content">
-<!--                        <img src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg" width="100%" height="100%" alt="">-->
+                        <!--                        <img src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg" width="100%" height="100%" alt="">-->
                     </div>
                 </el-col>
                 <el-col :offset="3" :span="10">
                     <div class="login-main">
-                        <el-tabs  type="card" v-model="activeName" @tab-click="resetForm('ruleForm')">
-                            <el-tab-pane   label="登录"  name="login">
+                        <el-tabs type="card" v-model="activeName" @tab-click="resetForm('ruleForm')">
+                            <el-tab-pane label="登录" name="login">
                                 <div class="login-form">
                                     <!--登录表单-->
                                     <el-form
                                             :rules="rules"
                                             label-position="top"
                                             :model="ruleForm"
-                                            status-icon
                                             ref="ruleForm"
                                             label-width="100px"
                                             class="demo-ruleForm">
                                         <el-form-item label="用户名" prop="username">
-                                            <el-input type="username" v-model="ruleForm.username" placeholder="邮箱、手机" autocomplete="off" clearable></el-input>
+                                            <el-input type="username" v-model="ruleForm.username" placeholder="邮箱、手机"
+                                                      autocomplete="off" clearable></el-input>
                                         </el-form-item>
                                         <el-form-item label="密码" prop="password">
-                                            <el-input type="password" v-model="ruleForm.password" placeholder="6-18位数字、字母组合" autocomplete="off" clearable></el-input>
+                                            <el-input type="password" v-model="ruleForm.password"
+                                                      placeholder="6-18位数字、字母组合" autocomplete="off"
+                                                      clearable></el-input>
                                         </el-form-item>
                                         <el-form-item label="验证码" prop="code">
                                             <el-row :gutter="20">
                                                 <el-col :span="16">
-                                                    <el-input type="code" v-model="ruleForm.code" placeholder="6位数字" autocomplete="off" clearable></el-input>
+                                                    <el-input type="code" v-model="ruleForm.code" placeholder="6位数字"
+                                                              autocomplete="off" clearable></el-input>
                                                 </el-col>
                                                 <el-col :span="8">
-                                                    <el-button type="success" class="block" @click="submitForm('ruleForm')">获取验证码</el-button>
+                                                    <el-button type="success" class="block"
+                                                               @click="getCode(ruleForm.username)"
+                                                               :loading="sendCode.sendCodeStatus"
+                                                               :disabled="sendCode.sendCodeDisabled"
+                                                    >{{sendCode.sendCodeText}}
+                                                    </el-button>
                                                 </el-col>
                                             </el-row>
                                         </el-form-item>
                                         <div class="placeholder-div"></div>
+                                        <el-form-item prop="remember-me">
+                                            <el-checkbox v-model="ruleForm.rememberMe">记住我</el-checkbox>
+                                        </el-form-item>
+
                                         <el-form-item>
                                             <el-row :gutter="10">
                                                 <el-col :span="24">
-                                                    <el-button class="block" type="danger" @click="submitForm('ruleForm')">登录</el-button>
+                                                    <el-button class="block" type="danger"
+                                                               @click="submitForm(ruleForm)">登录
+                                                    </el-button>
                                                 </el-col>
-<!--                                                <el-col :span="12">-->
-<!--                                                    <el-button class="block" @click="resetForm('ruleForm')">重置</el-button>-->
-<!--                                                </el-col>-->
                                             </el-row>
                                         </el-form-item>
                                     </el-form>
@@ -76,40 +87,50 @@
                                             <div class="fast-fg"></div>
                                         </el-col>
                                         <el-col :span="16">
-                                           <span class="icon iconweixin h1-fast"></span>
-                                           <span class="icon iconqq h1-fast"></span>
-                                           <span class="icon icongithub h1-fast"></span>
+                                            <span class="icon iconweixin h1-fast"></span>
+                                            <span class="icon iconqq h1-fast"></span>
+                                            <span class="icon icongithub h1-fast"></span>
                                         </el-col>
                                     </el-row>
                                 </div>
                             </el-tab-pane>
-                            <el-tab-pane   label="注册" name="registered">
+                            <el-tab-pane label="注册" name="registered">
                                 <div class="login-form">
                                     <!--登录表单-->
                                     <el-form
                                             :rules="rules"
                                             label-position="top"
                                             :model="ruleForm"
-                                            status-icon
                                             ref="ruleForm"
                                             label-width="100px"
                                             class="demo-ruleForm">
                                         <el-form-item label="用户名" prop="username">
-                                            <el-input type="username" v-model="ruleForm.username" placeholder="邮箱、手机" autocomplete="off" clearable></el-input>
+                                            <el-input type="username" v-model="ruleForm.username" placeholder="邮箱、手机"
+                                                      autocomplete="off" clearable></el-input>
                                         </el-form-item>
                                         <el-form-item label="密码" prop="password">
-                                            <el-input type="password" v-model="ruleForm.password" placeholder="6-18位数字、字母组合" autocomplete="off" clearable></el-input>
+                                            <el-input type="password" v-model="ruleForm.password"
+                                                      placeholder="6-18位数字、字母组合" autocomplete="off"
+                                                      clearable></el-input>
                                         </el-form-item>
                                         <el-form-item label="确认密码" prop="newPassword">
-                                            <el-input type="newPassword" v-model="ruleForm.newPassword" placeholder="6-18位数字、字母组合" autocomplete="off" clearable></el-input>
+                                            <el-input type="newPassword" v-model="ruleForm.newPassword"
+                                                      placeholder="6-18位数字、字母组合" autocomplete="off"
+                                                      clearable></el-input>
                                         </el-form-item>
                                         <el-form-item label="验证码" prop="code">
                                             <el-row :gutter="20">
                                                 <el-col :span="16">
-                                                    <el-input type="code" v-model="ruleForm.code" placeholder="" autocomplete="off" clearable></el-input>
+                                                    <el-input type="code" v-model="ruleForm.code" placeholder=""
+                                                              autocomplete="off" clearable></el-input>
                                                 </el-col>
                                                 <el-col :span="8">
-                                                    <el-button type="success" class="block" @click="submitForm('ruleForm')">获取验证码</el-button>
+                                                    <el-button type="success" class="block"
+                                                               @click="getCode(ruleForm.username)"
+                                                               :loading="sendCode.sendCodeStatus"
+                                                               :disabled="sendCode.sendCodeDisabled"
+                                                    >{{sendCode.sendCodeText}}
+                                                    </el-button>
                                                 </el-col>
                                             </el-row>
                                         </el-form-item>
@@ -117,10 +138,14 @@
                                         <el-form-item>
                                             <el-row :gutter="10">
                                                 <el-col :span="12">
-                                                    <el-button class="block" type="danger" @click="submitForm('ruleForm')">登录</el-button>
+                                                    <el-button class="block" type="danger"
+                                                               @click="submitForm('ruleForm')">登录
+                                                    </el-button>
                                                 </el-col>
                                                 <el-col :span="12">
-                                                    <el-button class="block" type="info" @click="resetForm('ruleForm')">重置</el-button>
+                                                    <el-button class="block" type="info" @click="resetForm('ruleForm')">
+                                                        重置
+                                                    </el-button>
                                                 </el-col>
                                             </el-row>
                                         </el-form-item>
@@ -138,7 +163,8 @@
 </template>
 
 <script>
-    import {validateEmail,validatePwd,validateCode} from "../../utils/validate";
+    import {validateEmail, validatePwd, validateCode} from "../../utils/validate";
+
     export default {
         name: "login",
         data() {
@@ -146,12 +172,9 @@
             let validateUsername = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入用户名'));
-                }else if(validateEmail(value)){
+                } else if (validateEmail(value)) {
                     callback(new Error('用户名格式错误'));
-                }else {
-                    if (this.ruleForm.password !== '') {
-                        this.$refs.ruleForm.validateField('username');
-                    }
+                } else {
                     callback();
                 }
             };
@@ -159,12 +182,9 @@
             let validatePassword = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入密码'));
-                }else if(validatePwd(value)){
+                } else if (validatePwd(value)) {
                     callback(new Error('密码格式错误'));
                 } else {
-                    if (this.ruleForm.password !== '') {
-                        this.$refs.ruleForm.validateField('password');
-                    }
                     callback();
                 }
             };
@@ -172,14 +192,11 @@
             let validateNewPassword = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入确认密码'));
-                }else if(validatePwd(value)){
+                } else if (validatePwd(value)) {
                     callback(new Error('密码格式错误'));
-                }else if(value !== this.ruleForm.password){
+                } else if (value !== this.ruleForm.password) {
                     callback(new Error('密码不一致'));
-                }else {
-                    if (this.ruleForm.password !== '') {
-                        this.$refs.ruleForm.validateField('newPassword');
-                    }
+                } else {
                     callback();
                 }
             };
@@ -187,57 +204,98 @@
             let validateVCode = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入验证码'));
-                }else if (validateCode(value)){
+                } else if (validateCode(value)) {
                     callback(new Error('验证码格式错误'));
-                }else {
-                    if (this.ruleForm.password !== '') {
-                        this.$refs.ruleForm.validateField('code');
-                    }
+                } else {
                     callback();
                 }
             };
 
             return {
+                //表单数据
                 ruleForm: {
                     username: '',
                     password: '',
-                    newPassword:"",
-                    code: ""
+                    newPassword: "",
+                    code: "",
+                    rememberMe: false
                 },
                 //登陆表单验证
                 rules: {
                     username: [
-                        { validator: validateUsername, trigger: 'blur' }
+                        {validator: validateUsername, trigger: 'blur'}
                     ],
                     password: [
-                        { validator: validatePassword, trigger: 'blur' }
+                        {validator: validatePassword, trigger: 'blur'}
                     ],
                     newPassword: [
-                        { validator: validateNewPassword, trigger: 'blur' }
+                        {validator: validateNewPassword, trigger: 'blur'}
                     ],
                     code: [
-                        { validator: validateVCode, trigger: 'blur' }
+                        {validator: validateVCode, trigger: 'blur'}
                     ]
                 },
+                //标签页默认选中
                 activeName: 'login',
+                //验证码
+                sendCode: {
+                    //验证码按钮状态
+                    sendCodeDisabled: false,
+                    //验证码加载状态
+                    sendCodeStatus: false,
+                    //验证码按钮文本
+                    sendCodeText: "获取验证码"
+                }
             };
         },
         methods: {
-            handleClick(tab, event) {
-                console.log(tab, event);
-            },
+            //登录函数
             submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
+                console.log(formName);
+                alert("登录成功");
             },
+            //重置函数
             resetForm(formName) {
                 this.$refs[formName].resetFields();
+            },
+            /**
+             * 设置验证码状态函数
+             * @param val1 是否禁用
+             * @param val2 是否加载
+             * @param val3 按钮文本信息
+             */
+            setCodeStatus(val1, val2, val3) {
+                if (val1!=="") this.sendCode.sendCodeDisabled = val1;
+                if (val2!=="") this.sendCode.sendCodeStatus = val2;
+                if (val3!=="") this.sendCode.sendCodeText = val3;
+            },
+            //获取验证码
+            getCode(value) {
+                if (!value) {
+                    this.$message.warning("用户名为空");
+                    return false;
+                }
+                //获取验证码的操作
+                this.$message.success("验证码是 " + Number.parseInt((Math.random() * 9 + 1) * 100000));
+                this.countDown(60);
+            },
+            //计时器
+            countDown(number) {
+                //定时器
+                if (timer) {
+                    clearInterval(timer);
+                }
+                this.setCodeStatus(true, false,"获取验证码");
+                let num = number;
+                let timer = setInterval(() => {
+                    num--;
+                    if (num === 0) {
+                        clearInterval(timer);
+                        this.setCodeStatus(false, false, "重新发送");
+                    }else {
+                        this.sendCode.sendCodeText = `倒计时${num}秒`;
+                    }
+                }, 1000)
             }
         }
 
@@ -274,7 +332,6 @@
         .h1-login {
             font-size: 35px;
             line-height: $navMenu;
-            font-family: "华文琥珀";
             color: #847e85;
         }
     }
@@ -294,32 +351,36 @@
             height: auto;
         }
     }
-    .login-form{
+
+    .login-form {
         margin: 20px 65px 65px 65px;
-        .block{
+
+        .block {
             width: 100%;
             display: inline-block;
         }
 
-        .placeholder-div{
-            height: 20px;
+        .placeholder-div {
             width: 100%;
+            margin-bottom: 5px;
         }
     }
-    .fast-login{
+
+    .fast-login {
         width: 100%;
         height: 60px;
         margin-bottom: 0;
         /*background-color: #847e85;*/
-        .h1-fast{
+        .h1-fast {
             font-size: 20px;
             line-height: 60px;
             margin-left: 20px;
         }
-        .fast-fg{
+
+        .fast-fg {
             display: inline-block;
             border: 0.1px solid #847e85;
-            height:  30px;
+            height: 30px;
             margin: 15px 5px;
         }
     }
