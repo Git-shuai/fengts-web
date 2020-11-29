@@ -2,7 +2,7 @@
     <div class="login-content">
         <!--头部-->
         <div class="header-content">
-            <el-row :gutter="10">
+            <el-row>
                 <el-col :offset="2" :span="1">
                     <div class="logo">
                         <img src="../../assets/logo.png" alt="LOGO" height="100%" width="100%">
@@ -17,13 +17,8 @@
         </div>
         <!--内容-->
         <div class="main-content">
-            <el-row :gutter="60">
-                <el-col :span="7">
-                    <div class="img-content">
-                        <!--                        <img src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg" width="100%" height="100%" alt="">-->
-                    </div>
-                </el-col>
-                <el-col :offset="3" :span="10">
+            <el-row>
+                <el-col :offset="14" :span="10">
                     <div class="login-main">
                         <el-tabs type="card" v-model="activeName" @tab-click="resetForm('ruleForm')">
                             <el-tab-pane label="登录" name="login">
@@ -164,7 +159,7 @@
 
 <script>
     import {validateEmail, validatePwd, validateCode} from "../../utils/validate";
-    import Vue from "vue";
+
     export default {
         name: "login",
         data() {
@@ -309,7 +304,7 @@
         width: 100%;
         height: 100vh;
         background-color: #f5f5f6;
-        background-image: url("../../assets/backg.jpg");
+        background-image: url("https://community-fts.oss-cn-beijing.aliyuncs.com/god-oss-upload/%E7%94%BB%E7%AC%94%E7%BE%8E%E5%A5%B3.png");
     }
 
     .header-content {
@@ -337,16 +332,10 @@
     }
 
     .main-content {
-        .img-content {
-            margin: 60px;
-            width: 600px;
-            height: 600px;
-        }
-
         .login-main {
-            margin-top: 150px;
+            margin-top: 70px;
             background-color: $mainColor;
-            opacity: 85%;
+            opacity: 90%;
             width: 500px;
             height: auto;
         }
