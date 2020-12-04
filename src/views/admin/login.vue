@@ -249,7 +249,6 @@
                 if (!this.judgmentInput(formName)){
                     return false;
                 }
-                return false;
                 let data ={
                     "username": formName.username,
                     "password": formName.password,
