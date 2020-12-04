@@ -56,7 +56,6 @@
                                                 </el-col>
                                             </el-row>
                                         </el-form-item>
-                                        <div class="placeholder-div"></div>
                                         <el-form-item prop="remember-me">
                                             <el-checkbox v-model="ruleForm.rememberMe">记住我</el-checkbox>
                                         </el-form-item>
@@ -91,7 +90,7 @@
                             </el-tab-pane>
                             <el-tab-pane label="注册" name="registered">
                                 <div class="login-form">
-                                    <!--登录表单-->
+                                    <!--注册表单-->
                                     <el-form
                                             :rules="rules"
                                             label-position="top"
@@ -109,7 +108,7 @@
                                                       clearable></el-input>
                                         </el-form-item>
                                         <el-form-item label="确认密码" prop="newPassword">
-                                            <el-input type="newPassword" v-model="ruleForm.newPassword"
+                                            <el-input type="password" v-model="ruleForm.newPassword"
                                                       placeholder="6-18位数字、字母组合" autocomplete="off"
                                                       clearable></el-input>
                                         </el-form-item>
@@ -129,16 +128,15 @@
                                                 </el-col>
                                             </el-row>
                                         </el-form-item>
-                                        <div class="placeholder-div"></div>
                                         <el-form-item>
                                             <el-row :gutter="10">
                                                 <el-col :span="12">
-                                                    <el-button class="block" type="danger"
-                                                               @click="submitForm('ruleForm')">登录
+                                                    <el-button class="block placeholder-div" type="danger"
+                                                               @click="registered(ruleForm)">注册
                                                     </el-button>
                                                 </el-col>
                                                 <el-col :span="12">
-                                                    <el-button class="block" type="info" @click="resetForm('ruleForm')">
+                                                    <el-button class="block placeholder-div" type="info" @click="resetForm('ruleForm')">
                                                         重置
                                                     </el-button>
                                                 </el-col>
@@ -158,7 +156,8 @@
 </template>
 
 <script>
-    import {validateEmail, validatePwd, validateCode} from "../../utils/validate";
+    import {validateCode, validateEmail, validatePwd} from "../../utils/validate";
+    import {getCode, registeredUser,login} from "../../api/user";
 
     export default {
         name: "login",
@@ -246,8 +245,56 @@
         methods: {
             //登录函数
             submitForm(formName) {
+                formName.newPassword=formName.password;
+                if (!this.judgmentInput(formName)){
+                    return false;
+                }
+                return false;
+                let data ={
+                    "username": formName.username,
+                    "password": formName.password,
+                    "code": formName.code
+                };
+                login(data).then((response)=>{
+                    let data= response.data;
+                    this.$message.success(data.message)
+                }).catch();
+            },
+            //注册函数
+            registered(formName){
+                if (!this.judgmentInput(formName)){
+                    return false;
+                }
+                let data ={
+                    "username": formName.username,
+                    "password": formName.password,
+                };
+                registeredUser(data).then((response)=>{
+                    let data= response.data;
+                    this.$message.success(data.message)
+                }).catch(()=>{
+                });
+            },
+            //判断输入框函数
+            judgmentInput(formName){
                 console.log(formName);
-                alert("登录成功");
+                if (formName.username === "") {
+                    this.$message.warning("用户名为空");
+                    return false;
+                }
+                if (formName.password === "") {
+                    this.$message.warning("密码为空为空");
+                    return false;
+                }
+                if (formName.newPassword) {
+                    this.$message.warning("确认密码为空");
+                    return false;
+                }
+                if (formName.code === "") {
+                    this.$message.warning("验证码为空");
+                    return false;
+                }
+                return true;
             },
             //重置函数
             resetForm(formName) {
@@ -271,7 +318,15 @@
                     return false;
                 }
                 //获取验证码的操作
-                this.$message.success("验证码是 " + Number.parseInt((Math.random() * 9 + 1) * 100000));
+                let data= {
+                    "username": value
+                };
+                getCode(data).then((response)=>{
+                    console.log(response.data.data);
+                    this.$message.success("验证码是 " +response.data.data.code);
+                }).catch((error)=>{
+                    console.log(error);
+                });
                 this.countDown(60);
             },
             //计时器
@@ -350,8 +405,7 @@
         }
 
         .placeholder-div {
-            width: 100%;
-            margin-bottom: 5px;
+            margin-top: 15px;
         }
     }
 

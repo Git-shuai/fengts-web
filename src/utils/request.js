@@ -1,12 +1,12 @@
 import axios from "axios";
-// import {Message} from 'element-ui';
+import {Message} from 'element-ui';
 
 
 //创建axios 赋给变量service
-// const BASEURL = process.env.NODE_ENV === "production" ? "" : "/api";
+const BASEURL = process.env.NODE_ENV === "production" ? "" : "/api";
 
 const service = axios.create({
-    baseURL: "http://localhost/",
+    baseURL: BASEURL,
     timeout: 3000,
 });
 
@@ -29,13 +29,13 @@ service.interceptors.request.use(function (config) {
 // 添加响应拦截器
 service.interceptors.response.use(function (response) {
     // 对响应数据做点什么
-    // let data = response.data;
-    // if (data.resCode !== 0) {
-    //     Message.error(data.message);
-    //     return Promise.reject(data);
-    // } else {
+    let data = response.data;
+    if (data.code !== 0) {
+        Message.error(data.message);
+        return Promise.reject(data);
+    } else {
         return response;
-    // }
+    }
 }, function (error) {
     // 对响应错误做点什么
     return Promise.reject(error);
