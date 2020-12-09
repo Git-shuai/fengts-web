@@ -1,10 +1,22 @@
 <template>
-    <div>控制台</div>
+    <div>
+        <navMenu />
+        <headerMenu />
+        <mainMenu />
+    </div>
 </template>
 
 <script>
+    import headerMenu from "./header.vue";
+    import mainMenu from "./main.vue";
+    import navMenu from "./nav.vue";
     export default {
-        name: "index"
+        name: "index",
+        components:{
+            headerMenu,
+            mainMenu,
+            navMenu
+        }
     }
 </script>
 

@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import commons from "../views/index";
+import admin from "../views/admin/comment/index"
 
 Vue.use(VueRouter);
 
@@ -75,10 +76,31 @@ const routes = [
     },{
         path: "/admin",
         name: "admin",
+        redirect: "/admin/dashBoard",
         meta: {
             name: "控制台"
         },
-        component: () => import("../views/admin/comment")
+        component: admin,
+        children:[
+            {
+                path: "/admin/dashBoard",
+                name: "adminDashBoard",
+                meta:{
+                    name: "仪表盘",
+                    icon: "icon icongerenjianjie"
+                },
+                component: () => import("../views/admin/dashBoard/index.vue")
+            },
+            {
+                path: "/admin/blog",
+                name: "adminBlog",
+                meta:{
+                    name: "博客管理",
+                    icon: "icon icongerenjianjie"
+                },
+                component: () => import("../views/admin/blog/index.vue")
+            }
+        ]
     }
 
 ];
