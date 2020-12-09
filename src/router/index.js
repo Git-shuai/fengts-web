@@ -72,6 +72,13 @@ const routes = [
             name: "登录"
         },
         component: () => import("../views/admin/login")
+    },{
+        path: "/admin",
+        name: "admin",
+        meta: {
+            name: "控制台"
+        },
+        component: () => import("../views/admin/comment")
     }
 
 ];

@@ -10,11 +10,13 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "axios": "^0.21.0",
+    "cookie_js": "^1.4.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.14.1",
     "swiper": "^6.3.5",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.0",
+    "vue-cookies": "^1.7.4",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },

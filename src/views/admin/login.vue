@@ -136,7 +136,8 @@
                                                     </el-button>
                                                 </el-col>
                                                 <el-col :span="12">
-                                                    <el-button class="block placeholder-div" type="info" @click="resetForm('ruleForm')">
+                                                    <el-button class="block placeholder-div" type="info"
+                                                               @click="resetForm('ruleForm')">
                                                         重置
                                                     </el-button>
                                                 </el-col>
@@ -157,7 +158,8 @@
 
 <script>
     import {validateCode, validateEmail, validatePwd} from "../../utils/validate";
-    import {getCode, registeredUser,login} from "../../api/user";
+    import {getCode, registeredUser, login} from "../../api/user";
+    import {setToken, setUsername} from "../../utils/app";
 
     export default {
         name: "login",
@@ -245,37 +247,46 @@
         methods: {
             //登录函数
             submitForm(formName) {
-                formName.newPassword=formName.password;
-                if (!this.judgmentInput(formName)){
+                formName.newPassword = formName.password;
+                if (!this.judgmentInput(formName)) {
                     return false;
                 }
-                let data ={
+                let data = {
                     "username": formName.username,
                     "password": formName.password,
                     "code": formName.code
                 };
-                login(data).then((response)=>{
-                    let data= response.data;
-                    this.$message.success(data.message)
+                login(data).then((response) => {
+                    let data = response.data;
+                    //设置token和用户名
+                    setToken(data.data.token);
+                    setUsername(data.data.username);
+                    this.$message.success(data.message);
+                    //跳转到后台首页
+                    this.$router.push({
+                        name: "admin"
+                    });
                 }).catch();
             },
             //注册函数
-            registered(formName){
-                if (!this.judgmentInput(formName)){
+            registered(formName) {
+                if (!this.judgmentInput(formName)) {
                     return false;
                 }
-                let data ={
+                let data = {
                     "username": formName.username,
                     "password": formName.password,
                 };
-                registeredUser(data).then((response)=>{
-                    let data= response.data;
+                registeredUser(data).then((response) => {
+                    let data = response.data;
+                    // setToken(data.data.token);
+                    // setUsername(data.data.username);
                     this.$message.success(data.message)
-                }).catch(()=>{
+                }).catch(() => {
                 });
             },
             //判断输入框函数
-            judgmentInput(formName){
+            judgmentInput(formName) {
                 console.log(formName);
                 if (formName.username === "") {
                     this.$message.warning("用户名为空");
@@ -285,7 +296,7 @@
                     this.$message.warning("密码为空为空");
                     return false;
                 }
-                if (formName.newPassword) {
+                if (formName.newPassword === "") {
                     this.$message.warning("确认密码为空");
                     return false;
                 }
@@ -306,9 +317,9 @@
              * @param val3 按钮文本信息
              */
             setCodeStatus(val1, val2, val3) {
-                if (val1!=="") this.sendCode.sendCodeDisabled = val1;
-                if (val2!=="") this.sendCode.sendCodeStatus = val2;
-                if (val3!=="") this.sendCode.sendCodeText = val3;
+                if (val1 !== "") this.sendCode.sendCodeDisabled = val1;
+                if (val2 !== "") this.sendCode.sendCodeStatus = val2;
+                if (val3 !== "") this.sendCode.sendCodeText = val3;
             },
             //获取验证码
             getCode(value) {
@@ -317,13 +328,13 @@
                     return false;
                 }
                 //获取验证码的操作
-                let data= {
+                let data = {
                     "username": value
                 };
-                getCode(data).then((response)=>{
+                getCode(data).then((response) => {
                     console.log(response.data.data);
-                    this.$message.success("验证码是 " +response.data.data.code);
-                }).catch((error)=>{
+                    this.$message.success("验证码是 " + response.data.data.code);
+                }).catch((error) => {
                     console.log(error);
                 });
                 this.countDown(60);
@@ -334,14 +345,14 @@
                 if (timer) {
                     clearInterval(timer);
                 }
-                this.setCodeStatus(true, false,"获取验证码");
+                this.setCodeStatus(true, false, "获取验证码");
                 let num = number;
                 let timer = setInterval(() => {
                     num--;
                     if (num === 0) {
                         clearInterval(timer);
                         this.setCodeStatus(false, false, "重新发送");
-                    }else {
+                    } else {
                         this.sendCode.sendCodeText = `倒计时${num}秒`;
                     }
                 }, 1000)

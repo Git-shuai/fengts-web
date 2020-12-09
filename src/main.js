@@ -16,7 +16,10 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 //全局函数
 import GlobalFun from "./utils/global_fun";
+//引入cookie
+import VueCookies from 'vue-cookies';
 
+Vue.use(VueCookies);
 Vue.use(GlobalFun);
 Vue.use(VueAxios, axios);
 Vue.use(Animated);
