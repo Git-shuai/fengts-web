@@ -279,9 +279,14 @@
                 };
                 registeredUser(data).then((response) => {
                     let data = response.data;
-                    // setToken(data.data.token);
-                    // setUsername(data.data.username);
-                    this.$message.success(data.message)
+                    console.log(data);
+                    setToken(data.data.token);
+                    setUsername(data.data.username);
+                    this.$message.success(data.message);
+                    //跳转到后台首页
+                    this.$router.push({
+                        name: "admin"
+                    });
                 }).catch(() => {
                 });
             },
