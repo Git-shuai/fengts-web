@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <navMenu />
-        <headerMenu />
-        <mainMenu />
+    <div :class="[this.isCollapse?'close':'open']">
+        <navMenu/>
+        <headerMenu/>
+        <mainMenu/>
     </div>
 </template>
 
@@ -10,12 +10,23 @@
     import headerMenu from "./header.vue";
     import mainMenu from "./main.vue";
     import navMenu from "./nav.vue";
+
     export default {
         name: "index",
-        components:{
+        components: {
             headerMenu,
             mainMenu,
             navMenu
+        },
+        computed:{
+            isCollapse:function () {
+                return this.$store.state.app.isCollapse;
+            }
+        },
+        data() {
+            return {
+
+            }
         }
     }
 </script>

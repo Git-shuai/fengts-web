@@ -12,15 +12,30 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    @import "../../../styles/config";
+
     .main-content {
         /*position: fixed;*/
-        padding-left: 200px;
+        padding-left: $adminNavMenu;
         padding-top: 60px;
+        @include webkit(transition, all .3s ease 0s);
     }
 
     .content {
         margin: 30px;
         background-color: #fff;
+    }
+
+    .open {
+        .main-content {
+            padding-left: $adminNavMenu;
+        }
+    }
+
+    .close {
+        .main-content {
+            padding-left: $adminNavMenuMin;
+        }
     }
 </style>

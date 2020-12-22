@@ -11,24 +11,40 @@
         name: "headerMenu",
         methods: {
             navMenuStatus() {
-                console.log("123")
+                this.$store.commit('app/SET_isCollapse');
             }
         }
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    @import "../../../styles/config";
+
     .header-content {
         position: fixed;
         top: 0;
-        left: 200px;
+        left: $adminNavMenu;
         height: 60px;
         right: 0;
         background-color: #ffffff;
+        @include webkit(transition, all .3s ease 0s);
     }
-    .icon-font{
+
+    .icon-font {
         font-size: 35px;
         line-height: 60px;
         margin-left: 10px;
+    }
+
+    .open {
+        .header-content {
+            left: $adminNavMenu;
+        }
+    }
+
+    .close {
+        .header-content {
+            left: $adminNavMenuMin;
+        }
     }
 </style>

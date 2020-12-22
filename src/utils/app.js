@@ -6,6 +6,7 @@ cookie.expiresMultiplier=60*60*24*7;
 const token="Authorization";
 const username="fengtsUser";
 const menuList="menuList";
+const IsCollapse="IsCollapse";
 
 export function setToken(Authorization) {
  return cookie.set(token,Authorization);
@@ -40,4 +41,16 @@ export function getMenu() {
 
 export function removeMenu() {
     return cookie.remove(menuList);
+}
+
+export function setIsCollapse(value) {
+    return cookie.set(IsCollapse,JSON.stringify(value));
+}
+
+export function getIsCollapse() {
+    return cookie.get(IsCollapse)==="true";
+}
+
+export function removeIsCollapse() {
+    return cookie.remove(IsCollapse);
 }
