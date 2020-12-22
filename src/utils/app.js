@@ -5,6 +5,7 @@ cookie.expiresMultiplier=60*60*24*7;
 
 const token="Authorization";
 const username="fengtsUser";
+const menuList="menuList";
 
 export function setToken(Authorization) {
  return cookie.set(token,Authorization);
@@ -27,4 +28,16 @@ export function getUsername() {
 
 export function removeUsername() {
     return cookie.remove(username);
+}
+
+export function setMenu(menuUrl) {
+    return cookie.set(menuList,menuUrl);
+}
+
+export function getMenu() {
+    return cookie.get(menuList);
+}
+
+export function removeMenu() {
+    return cookie.remove(menuList);
 }

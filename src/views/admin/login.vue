@@ -158,7 +158,7 @@
 <script>
     import {validateCode, validateEmail, validatePwd} from "../../utils/validate";
     import {getCode, registeredUser, login} from "../../api/user";
-    import {setToken, setUsername} from "../../utils/app";
+    import {setMenu, setToken, setUsername} from "../../utils/app";
 
     export default {
         name: "login",
@@ -260,6 +260,7 @@
                     //设置token和用户名
                     setToken(data.data.token);
                     setUsername(data.data.username);
+                    setMenu(data.data.menus);
                     this.$message.success(data.message);
                     //跳转到后台首页
                     this.$router.push({
@@ -281,6 +282,7 @@
                     console.log(data);
                     setToken(data.data.token);
                     setUsername(data.data.username);
+                    setMenu(data.data.menus);
                     this.$message.success(data.message);
                     //跳转到后台首页
                     this.$router.push({

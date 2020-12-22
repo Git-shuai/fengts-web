@@ -8,15 +8,19 @@
 
 <script>
     export default {
-        name: "main"
+        name: "mainMenu"
     }
 </script>
 
 <style scoped>
-.main-content{
-    /*position: fixed;*/
-    height: 100%;
-    padding-left: 200px;
-    padding-top: 60px;
-}
+    .main-content {
+        /*position: fixed;*/
+        padding-left: 200px;
+        padding-top: 60px;
+    }
+
+    .content {
+        margin: 30px;
+        background-color: #fff;
+    }
 </style>

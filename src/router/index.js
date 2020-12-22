@@ -78,8 +78,10 @@ const routes = [
         name: "admin",
         redirect: "/admin/dashBoard",
         meta: {
-            name: "控制台"
+            name: "控制台",
+            icon: "icon iconyibiaopan"
         },
+        status: 2,
         component: admin,
         children:[
             {
@@ -87,16 +89,29 @@ const routes = [
                 name: "adminDashBoard",
                 meta:{
                     name: "仪表盘",
-                    icon: "icon icongerenjianjie"
+                    icon: "icon iconyibiaopan"
                 },
                 component: () => import("../views/admin/dashBoard/index.vue")
-            },
+            }
+        ]
+    },
+    {
+        path: "/admin/blog",
+        name: "adminBlog",
+        redirect: "/admin/blogList",
+        meta: {
+            name: "博客管理",
+            icon: "icon iconbokeblogger3"
+        },
+        status: 2,
+        component: admin,
+        children:[
             {
-                path: "/admin/blog",
-                name: "adminBlog",
+                path: "/admin/blogList",
+                name: "adminBlogList",
                 meta:{
-                    name: "博客管理",
-                    icon: "icon icongerenjianjie"
+                    name: "博客列表",
+                    icon: "icon iconbokeblogger3"
                 },
                 component: () => import("../views/admin/blog/index.vue")
             }

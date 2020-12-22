@@ -1,5 +1,5 @@
 <template>
-    <div>博客管理页面</div>
+    <div>博客列表页面</div>
 </template>
 
 <script>

@@ -6,6 +6,125 @@
   "description": "个人网站",
   "glyphs": [
     {
+      "icon_id": "424648",
+      "name": "菜单-路径分析 icon",
+      "font_class": "caidanlujingfenxiicon",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "1111848",
+      "name": "个人资料",
+      "font_class": "gerenziliao",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "4474357",
+      "name": "关于",
+      "font_class": "guanyu",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "4560816",
+      "name": "查找 表单 列表",
+      "font_class": "chazhaobiaodanliebiao",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "4631515",
+      "name": "个人资料",
+      "font_class": "gerenziliao1",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "5760810",
+      "name": "权限",
+      "font_class": "quanxian",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "6702150",
+      "name": "角色权限",
+      "font_class": "jiaosequanxian",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "7823880",
+      "name": "评 论",
+      "font_class": "pinglun",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "7827613",
+      "name": "仪表盘",
+      "font_class": "yibiaopan",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "9603428",
+      "name": "系统",
+      "font_class": "xitong-copy",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "10048298",
+      "name": "系统日志",
+      "font_class": "xitongrizhi",
+      "unicode": "e6e4",
+      "unicode_decimal": 59108
+    },
+    {
+      "icon_id": "11427362",
+      "name": "角色权限",
+      "font_class": "jiaosequanxian1",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "13123362",
+      "name": "角色",
+      "font_class": "jiaose",
+      "unicode": "e67a",
+      "unicode_decimal": 59002
+    },
+    {
+      "icon_id": "13623347",
+      "name": "标签",
+      "font_class": "biaoqian",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "13965701",
+      "name": "表单 列表-03",
+      "font_class": "biaodanliebiao-",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "14415966",
+      "name": "写 (2)",
+      "font_class": "xie2",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "17366204",
+      "name": "分类",
+      "font_class": "category",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
       "icon_id": "851697",
       "name": "QQ",
       "font_class": "qq",
