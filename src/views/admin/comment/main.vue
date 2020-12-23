@@ -16,7 +16,6 @@
     @import "../../../styles/config";
 
     .main-content {
-        /*position: fixed;*/
         padding-left: $adminNavMenu;
         padding-top: 60px;
         @include webkit(transition, all .3s ease 0s);

@@ -70,6 +70,38 @@
                     "        System.out.println(\"Hello World\");\n" +
                     "    }\n" +
                     "}\n" +
+                    "```\n" +
+                    "```css\n" +
+                    "    <div class=\"mavonEditor\">\n" +
+                    "        <mavon-editor\n" +
+                    "                :codeStyle=\"markdownOption.codeStyle\"\n" +
+                    "                :ishljs=\"true\"\n" +
+                    "                :toolbars=\"markdownOption\"\n" +
+                    "                v-model=\"value\"/>\n" +
+                    "    </div>\n" +
+                    "```\n" +
+                    "```java\n" +
+                    "public class HelloWorld {\n" +
+                    "    public static void main(String[] args) {\n" +
+                    "        System.out.println(\"Hello World\");\n" +
+                    "    }\n" +
+                    "}\n" +
+                    "```\n" +
+                    "```css\n" +
+                    "    <div class=\"mavonEditor\">\n" +
+                    "        <mavon-editor\n" +
+                    "                :codeStyle=\"markdownOption.codeStyle\"\n" +
+                    "                :ishljs=\"true\"\n" +
+                    "                :toolbars=\"markdownOption\"\n" +
+                    "                v-model=\"value\"/>\n" +
+                    "    </div>\n" +
+                    "```\n" +
+                    "```java\n" +
+                    "public class HelloWorld {\n" +
+                    "    public static void main(String[] args) {\n" +
+                    "        System.out.println(\"Hello World\");\n" +
+                    "    }\n" +
+                    "}\n" +
                     "```\n"
             }
         },

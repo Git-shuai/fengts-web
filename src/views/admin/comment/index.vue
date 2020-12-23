@@ -1,8 +1,12 @@
 <template>
     <div :class="[this.isCollapse?'close':'open']">
-        <navMenu/>
-        <headerMenu/>
-        <mainMenu/>
+        <div class="index">
+            <navMenu/>
+            <headerMenu/>
+            <div class="mainMenu">
+                <mainMenu/>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -18,19 +22,25 @@
             mainMenu,
             navMenu
         },
-        computed:{
-            isCollapse:function () {
+        computed: {
+            isCollapse: function () {
                 return this.$store.state.app.isCollapse;
             }
         },
         data() {
-            return {
-
-            }
+            return {}
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .index{
+        .mainMenu{
+            position:absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: -1;
+        }
+    }
 </style>
