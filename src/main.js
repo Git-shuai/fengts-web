@@ -18,7 +18,10 @@ import VueAxios from 'vue-axios';
 import GlobalFun from "./utils/global_fun";
 //引入cookie
 import VueCookies from 'vue-cookies';
-
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+// use
+Vue.use(mavonEditor);
 Vue.use(VueCookies);
 Vue.use(GlobalFun);
 Vue.use(VueAxios, axios);

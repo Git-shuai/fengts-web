@@ -73,7 +73,7 @@ const routes = [
             name: "登录"
         },
         component: () => import("../views/admin/login")
-    },{
+    }, {
         path: "/admin",
         name: "admin",
         redirect: "/admin/dashBoard",
@@ -83,11 +83,11 @@ const routes = [
         },
         status: 2,
         component: admin,
-        children:[
+        children: [
             {
                 path: "/admin/dashBoard",
                 name: "adminDashBoard",
-                meta:{
+                meta: {
                     name: "仪表盘",
                     icon: "icon iconyibiaopan"
                 },
@@ -105,15 +105,23 @@ const routes = [
         },
         status: 2,
         component: admin,
-        children:[
+        children: [
             {
                 path: "/admin/blogList",
                 name: "adminBlogList",
-                meta:{
+                meta: {
                     name: "博客列表",
                     icon: "icon iconbokeblogger3"
                 },
                 component: () => import("../views/admin/blog/index.vue")
+            }, {
+                path: "/admin/writeBlog",
+                name: "writeBlog",
+                meta: {
+                    name: "写博客",
+                    icon: "icon iconxie2"
+                },
+                component: () => import("../views/admin/blog/writeBlog.vue")
             }
         ]
     }
