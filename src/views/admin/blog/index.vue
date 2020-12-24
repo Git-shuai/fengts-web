@@ -145,6 +145,7 @@
 
 <style lang="scss" scoped>
     .blogList-content {
+        background-color: #fff;
     }
     .search-content{
         padding: 17px;

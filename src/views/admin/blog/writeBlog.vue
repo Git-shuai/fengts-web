@@ -14,12 +14,9 @@
         <div class="publish-btn">
             <div class="btn">
             <el-row>
-                <el-button size="mini">默认按钮</el-button>
-                <el-button size="mini" type="primary">主要按钮</el-button>
-                <el-button size="mini" type="success">成功按钮</el-button>
-                <el-button size="mini" type="info">信息按钮</el-button>
-                <el-button size="mini" type="warning">警告按钮</el-button>
-                <el-button size="mini" type="danger">危险按钮</el-button>
+                <el-button size="mini" type="danger" plain>保存草稿</el-button>
+                <el-button size="mini" plain>预览</el-button>
+                <el-button size="mini" type="primary">发布</el-button>
             </el-row>
             </div>
         </div>
@@ -66,6 +63,7 @@
     .btn{
         float: right;
         line-height: 56px;
+        margin-right: 30px;
     }
 
 </style>

@@ -122,6 +122,22 @@ const routes = [
                     icon: "icon iconxie2"
                 },
                 component: () => import("../views/admin/blog/writeBlog.vue")
+            }, {
+                path: "/admin/categories",
+                name: "adminCategories",
+                meta: {
+                    name: "分类目录",
+                    icon: "icon iconcategory"
+                },
+                component: () => import("../views/admin/blog/categories.vue")
+            }, {
+                path: "/admin/tags",
+                name: "admintags",
+                meta: {
+                    name: "标签",
+                    icon: "icon iconbiaoqian"
+                },
+                component: () => import("../views/admin/blog/tags.vue")
             }
         ]
     }

@@ -23,7 +23,6 @@
 
     .content {
         margin: 30px;
-        background-color: #fff;
     }
 
     .open {
