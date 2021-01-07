@@ -51,6 +51,7 @@
         left: 0;
         width: $adminNavMenu;
         height: 100vh;
+        z-index: 9999;
         background-color: $adminNavColor;
         @include webkit(transition, all .3s ease 0s);
     }

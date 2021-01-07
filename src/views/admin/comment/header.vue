@@ -26,6 +26,7 @@
         left: $adminNavMenu;
         height: 60px;
         right: 0;
+        z-index: 9999;
         background-color: #ffffff;
         @include webkit(transition, all .3s ease 0s);
     }

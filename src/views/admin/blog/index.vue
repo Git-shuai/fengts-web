@@ -76,6 +76,7 @@
         data() {
             return {
                 //搜索数据
+                dialogVisible:false,
                 searchTerm: {
                     keyword: '',
                     blogStatus: '',

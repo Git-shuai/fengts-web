@@ -29,12 +29,12 @@
                             </el-form-item>
 
                             <el-form-item label="描述:">
-                                <el-input type="textarea" :rows="4" placeholder="分类描述，需要主题支持"
+                                <el-input type="textarea" :rows="4" placeholder="标签描述，需要主题支持"
                                           v-model="categoriesOption.textDesc"></el-input>
                             </el-form-item>
 
                             <el-form-item>
-                                <el-button size="small" type="primary">成功按钮</el-button>
+                                <el-button size="small" type="primary" @click="dialogVisible=true">成功按钮</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
