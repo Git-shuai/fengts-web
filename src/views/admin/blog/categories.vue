@@ -17,15 +17,15 @@
                                           v-model="categoriesOption.categoriesName"></el-input>
                             </el-form-item>
 
-                            <el-form-item label="别名:">
-                                <el-input clearable placeholder="一般为单个分类页面的标识，最好为英文"
-                                          v-model="categoriesOption.Alias"></el-input>
-                            </el-form-item>
 
-                            <el-form-item  label="上级目录:">
-                                <el-select class="select-parent" v-model="categoriesOption.parent" placeholder="请选择活动区域">
-                                    <el-option label="区域一" value="shanghai"></el-option>
-                                    <el-option label="区域二" value="beijing"></el-option>
+                            <el-form-item label="上级目录:">
+                                <el-select filterable class="select-parent"
+                                           v-model="categoriesOption.parentId"
+                                           placeholder="没有上级标签" clearable
+                                           @visible-change="selectParentClassify"
+                                >
+                                    <el-option v-for="(item,index) in parentOption" :key="index" :label="item.classifyName"
+                                               :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
 
@@ -35,7 +35,8 @@
                             </el-form-item>
 
                             <el-form-item>
-                                <el-button size="small" type="primary">成功按钮</el-button>
+                                <el-button v-if="classifyBtnStatus" size="small" type="primary" @click="addBlogClassify">添加标签</el-button>
+                                <el-button v-else size="small" type="warning" @click="editBlogClassify">修改标签</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -48,21 +49,23 @@
                     </div>
                     <div class="table-categories">
                         <el-table :data="categoriesTable" style="width: 100%">
-                            <el-table-column prop="categoriesName" label="名称" width="180"></el-table-column>
-                            <el-table-column prop="Alias" label="别名" width="180"></el-table-column>
-                            <el-table-column prop="textDesc" label="描述" width="220"></el-table-column>
-                            <el-table-column prop="parent" label="上级名称" width="100"></el-table-column>
-                            <el-table-column prop="textNum" label="文章数" width="180"></el-table-column>
+                            <el-table-column prop="classifyName" label="名称" width="180"></el-table-column>
+                            <el-table-column prop="des" label="描述" width="220"></el-table-column>
+                            <el-table-column prop="classifyParentName" label="上级名称" width="100"></el-table-column>
+                            <el-table-column prop="sum" label="文章数" width="180"></el-table-column>
                             <el-table-column label="操作">
                                 <template slot-scope="scope">
-                                    <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-                                    <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
+                                    <el-button @click="editClassify(scope.row)" type="text" size="small">编辑</el-button>
+                                    <el-popconfirm title="你确定要删除该分类吗？" @confirm="deleteClassify(scope.row)">
+                                        <el-button slot="reference" type="text" size="small">删除</el-button>
+                                    </el-popconfirm>
                                 </template>
                             </el-table-column>
                         </el-table>
                     </div>
                     <div class="pagination">
                         <el-pagination
+                                @current-change="handleSizeChange"
                                 background
                                 layout="prev, pager, next"
                                 :page-size="paginationData.pageSize"
@@ -78,57 +81,118 @@
 </template>
 
 <script>
+    import {
+        addClassify,
+        deleteClassify,
+        editClassify,
+        selectClassifyList,
+        selectParentClassify
+    } from "../../../api/blog";
+
     export default {
         name: "categories",
         data() {
             return {
+                classifyBtnStatus: true,
                 labelPosition: "top",
                 categoriesOption: {
                     //label位置
                     //名称
+                    id: "",
                     categoriesName: "",
-                    Alias: "",
-                    parent: "shanghai",
+                    parentId: "",
                     textDesc: ''
                 },
+                //父标签备份（用来更新下拉框）
+                parentOptionB: [],
+                parentOption: [],
 
                 //分类列表
-                categoriesTable: [{
-                    categoriesName: '2016-05-02',
-                    Alias: '王小虎',
-                    textDesc: '上海市普陀区金沙江路 1518 弄',
-                    textNum: '2'
-                }, {
-                    categoriesName: '2016-05-02',
-                    Alias: '王小虎',
-                    textDesc: '上海市普陀区金沙江路 1518 弄',
-                    textNum: '2'
-                }, {
-                    categoriesName: '2016-05-02',
-                    Alias: '王小虎',
-                    textDesc: '上海市普陀区金沙江路 1518 弄',
-                    textNum: '2'
-                }, {
-                    categoriesName: '2016-05-02',
-                    Alias: '王小虎',
-                    textDesc: '上海市普陀区金沙江路 1518 弄',
-                    textNum: '2'
-                }],
+                categoriesTable: [],
                 //分页
                 paginationData:{
-                    total: 50,
-                    pageSize: 10
+                    page: 1,
+                    pageSize: 8,
+                    total: 50
                 }
 
             }
         },
+        created() {
+            this.selectClassifyList();
+            this.selectParentClassify();
+        },
         methods: {
-            onSubmit() {
-                console.log('submit!');
+            //添加分类
+            addBlogClassify(){
+                let data={
+                    "parentId": this.categoriesOption.parentId,
+                    "classifyName": this.categoriesOption.categoriesName,
+                    "des": this.categoriesOption.textDesc
+                };
+                addClassify(data).then((response)=>{
+                    //展示成功信息
+                    this.$message.success(response.data.message);
+                    //更新输入框
+                    this.categoriesOption={};
+                    this.selectClassifyList();
+                }).catch();
             },
-            handleClick(row) {
-                console.log(row);
-            }
+            deleteClassify(row){
+                deleteClassify(row.id).then((response)=>{
+                    //提示信息
+                    this.$message.success(response.data.message);
+                    //刷新列表
+                    this.selectClassifyList();
+                }).catch();
+            },
+            //修改分类按钮的事件
+            editBlogClassify(){
+                let data={
+                    "id": this.categoriesOption.id,
+                    "parentId": this.categoriesOption.parentId,
+                    "classifyName": this.categoriesOption.categoriesName,
+                    "des": this.categoriesOption.textDesc
+                };
+                editClassify(data).then((response)=>{
+                    this.$message.success(response.data.message);
+                    this.selectClassifyList();
+                    this.categoriesOption={};
+                }).catch();
+            },
+            editClassify(row){
+                //修改分类按钮
+                this.classifyBtnStatus=false;
+                //添加分类信息回显
+                this.categoriesOption.id=row.id;
+                this.categoriesOption.parentId=row.parentId;
+                this.categoriesOption.textDesc=row.des;
+                this.categoriesOption.categoriesName=row.classifyName;
+                //设置上级分类（this.parentOptionB 重点）
+                this.parentOption = this.parentOptionB.filter(item => item.classifyName !== row.classifyName);
+            },
+            selectClassifyList(){
+                let data ={
+                    "page": this.paginationData.page,
+                    "size": this.paginationData.pageSize
+                };
+                selectClassifyList(data).then((response)=>{
+                    //列表赋值
+                    this.categoriesTable=response.data.data.records;
+                    this.paginationData.total=response.data.data.total;
+                }).catch();
+            },
+            selectParentClassify(){
+                //查询父分类
+                selectParentClassify().then((response)=>{
+                    this.parentOption=response.data.data;
+                    this.parentOptionB=this.parentOption;
+                }).catch();
+            },
+            handleSizeChange(value) {
+                this.paginationData.page = value;
+                this.selectClassifyList();
+            },
         }
     }
 </script>

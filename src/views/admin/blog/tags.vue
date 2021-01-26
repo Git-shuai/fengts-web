@@ -17,9 +17,11 @@
                             </el-form-item>
 
 
-                            <el-form-item  label="上级目录:">
-                                <el-select filterable class="select-parent" v-model="tagsOption.parentId" placeholder="没有上级标签" clearable>
-                                    <el-option v-for="(item,index) in parentOption" :key="index" :label="item.tagName" :value="item.id"></el-option>
+                            <el-form-item label="上级目录:">
+                                <el-select filterable class="select-parent" v-model="tagsOption.parentId"
+                                           placeholder="没有上级标签" clearable>
+                                    <el-option v-for="(item,index) in parentOption" :key="index" :label="item.tagName"
+                                               :value="item.id"></el-option>
                                 </el-select>
                             </el-form-item>
 
@@ -29,7 +31,8 @@
                             </el-form-item>
 
                             <el-form-item>
-                                <el-button size="small" type="primary" @click="addBlogTag">添加标签</el-button>
+                                <el-button v-if="tagBtnStatus" size="small" type="primary" @click="addBlogTag">添加标签</el-button>
+                                <el-button v-else size="small" type="warning" @click="editBlogTag">修改标签</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -42,21 +45,23 @@
                     </div>
                     <div class="table-tags">
                         <el-table :data="tagsTable" style="width: 100%">
-                            <el-table-column prop="tagsName" label="名称" width="180"></el-table-column>
-                            <el-table-column prop="Alias" label="别名" width="180"></el-table-column>
-                            <el-table-column prop="textDesc" label="描述" width="220"></el-table-column>
-                            <el-table-column prop="parent" label="上级名称" width="100"></el-table-column>
-                            <el-table-column prop="textNum" label="文章数" width="180"></el-table-column>
+                            <el-table-column prop="tagName" label="名称" width="180"></el-table-column>
+                            <el-table-column prop="des" label="描述" width="250"></el-table-column>
+                            <el-table-column prop="parentTagName" label="上级名称" width="180"></el-table-column>
+                            <el-table-column prop="sum" label="文章数" width="180"></el-table-column>
                             <el-table-column label="操作">
                                 <template slot-scope="scope">
-                                    <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-                                    <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
+                                    <el-button @click="editTag(scope.row)" type="text" size="small">编辑</el-button>
+                                    <el-popconfirm title="你确定要删除该标签吗？" @confirm="deleteTag(scope.row)">
+                                        <el-button slot="reference" type="text" size="small">删除</el-button>
+                                    </el-popconfirm>
                                 </template>
                             </el-table-column>
                         </el-table>
                     </div>
                     <div class="pagination">
                         <el-pagination
+                                @current-change="handleSizeChange"
                                 background
                                 layout="prev, pager, next"
                                 :page-size="paginationData.pageSize"
@@ -72,75 +77,112 @@
 </template>
 
 <script>
-    import {addTag, selectParentTag} from "../../../api/blog";
+    import {addTag, deleteTag, editTag, selectParentTag, selectTagsList} from "../../../api/blog";
 
     export default {
         name: "tags",
         data() {
             return {
+                tagBtnStatus: true,
                 labelPosition: "top",
                 tagsOption: {
                     //label位置
                     //名称
+                    id: "",
                     tagsName: "",
                     parentId: "",
                     textDesc: ''
                 },
-                parentOption:[],
+                //父标签备份（用来更新下拉框）
+                parentOptionB: [],
+                parentOption: [],
 
                 //分类列表
-                tagsTable: [{
-                    tagsName: '2016-05-02',
-                    Alias: '王小虎',
-                    textDesc: '上海市普陀区金沙江路 1518 弄',
-                    textNum: '2'
-                }, {
-                    tagsName: '2016-05-02',
-                    Alias: '王小虎',
-                    textDesc: '上海市普陀区金沙江路 1518 弄',
-                    textNum: '2'
-                }, {
-                    tagsName: '2016-05-02',
-                    Alias: '王小虎',
-                    textDesc: '上海市普陀区金沙江路 1518 弄',
-                    textNum: '2'
-                }, {
-                    tagsName: '2016-05-02',
-                    Alias: '王小虎',
-                    textDesc: '上海市普陀区金沙江路 1518 弄',
-                    textNum: '2'
-                }],
+                tagsTable: [],
                 //分页
-                paginationData:{
-                    total: 50,
-                    pageSize: 10
+                paginationData: {
+                    page: 1,
+                    pageSize: 8,
+                    total: 50
                 }
-
             }
         },
         created() {
             this.selectParentTag();
+            this.selectTagList();
         },
         methods: {
             //查询父类标签
-            selectParentTag(){
-                selectParentTag().then((response)=>{
+            selectParentTag() {
+                selectParentTag().then((response) => {
                     //赋值到上级目录
-                    this.parentOption=response.data.data;
+                    this.parentOption = response.data.data;
+                    this.parentOptionB = this.parentOption;
                 }).catch()
             },
-            addBlogTag(){
-                let  data={
+            addBlogTag() {
+                let data = {
                     "tagName": this.tagsOption.tagsName,
                     "des": this.tagsOption.textDesc,
                     "parentId": this.tagsOption.parentId
                 };
-                addTag(data).then((response)=>{
-                    let resData=response.data;
+                addTag(data).then((response) => {
+                    let resData = response.data;
                     this.$message.success(resData.message);
                     //重置
-                    this.tagsOption={};
+                    this.tagsOption = {};
+                    //更新列表
+                    this.selectTagList();
+                    //更新父标签
+                    this.selectParentTag();
                 }).catch();
+            },
+            selectTagList() {
+                let data = {
+                    "page": this.paginationData.page,
+                    "size": this.paginationData.pageSize
+                };
+                selectTagsList(data).then((response) => {
+                    this.tagsTable = response.data.data.records;
+                    //赋予总数
+                    this.paginationData.total = response.data.data.total;
+                }).catch()
+            },
+            handleSizeChange(value) {
+                this.paginationData.page = value;
+                this.selectTagList();
+            },
+            deleteTag(row) {
+                deleteTag(row.id).then(() => {
+                    this.$message.success("删除成功");
+                    this.selectTagList();
+                }).catch();
+            },
+            editTag(row) {
+                //更新父标签
+                this.tagBtnStatus = false;
+                //设置更新信息
+                this.tagsOption.id = row.id;
+                this.tagsOption.tagsName = row.tagName;
+                this.tagsOption.textDesc = row.des;
+                this.tagsOption.parentId = row.parentId;
+                //设置上级分类（this.parentOptionB 重点）
+                this.parentOption = this.parentOptionB.filter(item => item.tagName !== row.tagName);
+
+            },
+            editBlogTag() {
+                let data = {
+                    "id": this.tagsOption.id,
+                    "des": this.tagsOption.textDesc,
+                    "tagName": this.tagsOption.tagsName,
+                    "parentId": this.tagsOption.parentId
+                };
+                editTag(data).then(() => {
+                    this.$message.success("修改成功");
+                    this.tagBtnStatus = true;
+                    this.tagsOption = {};
+                    this.selectTagList();
+                }).catch()
             }
         }
     }
@@ -150,7 +192,8 @@
     .tags-content {
         .tags-form {
             margin: 0 20px 0 20px;
-            .tags-btn{
+
+            .tags-btn {
                 margin-right: 60px;
             }
         }
@@ -160,13 +203,16 @@
         font-size: 15px;
         font-weight: bold;
     }
-    .select-parent{
+
+    .select-parent {
         width: 100%;
     }
-    .table-tags{
+
+    .table-tags {
 
     }
-    .pagination{
+
+    .pagination {
         float: right;
         margin-top: 15px;
         padding-bottom: 15px;
