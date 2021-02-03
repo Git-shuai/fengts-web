@@ -5,19 +5,19 @@
                 :fontSize="toolbarsOption.fontSize"
                 :ishljs="true"
                 :toolbars="toolbarsOption"
-                v-model="value"/>
+                v-model="blogContentValue"/>
     </div>
 </template>
 
 <script>
     export default {
         name: "Editormd",
-        props:{
+        props: {
+            content: String
         },
-        data(){
-            return{
+        data() {
+            return {
                 //工具栏
-
                 toolbarsOption: {
                     bold: true, // 粗体
                     italic: true, // 斜体
@@ -34,7 +34,7 @@
                     imagelink: true, // 图片链接
                     code: true, // code
                     table: true, // 表格
-                    fullscreen: true, // 全屏编辑
+                    // fullscreen: true, // 全屏编辑
                     readmodel: true, // 沉浸式阅读
                     htmlcode: true, // 展示html源码
                     help: true, // 帮助
@@ -55,57 +55,21 @@
                     codeStyle: "atom-one-dark",
                     fontSize: "15px",
                 },
-                value: "```css\n" +
-                    "    <div class=\"mavonEditor\">\n" +
-                    "        <mavon-editor\n" +
-                    "                :codeStyle=\"markdownOption.codeStyle\"\n" +
-                    "                :ishljs=\"true\"\n" +
-                    "                :toolbars=\"markdownOption\"\n" +
-                    "                v-model=\"value\"/>\n" +
-                    "    </div>\n" +
-                    "```\n" +
-                    "```java\n" +
-                    "public class HelloWorld {\n" +
-                    "    public static void main(String[] args) {\n" +
-                    "        System.out.println(\"Hello World\");\n" +
-                    "    }\n" +
-                    "}\n" +
-                    "```\n" +
-                    "```css\n" +
-                    "    <div class=\"mavonEditor\">\n" +
-                    "        <mavon-editor\n" +
-                    "                :codeStyle=\"markdownOption.codeStyle\"\n" +
-                    "                :ishljs=\"true\"\n" +
-                    "                :toolbars=\"markdownOption\"\n" +
-                    "                v-model=\"value\"/>\n" +
-                    "    </div>\n" +
-                    "```\n" +
-                    "```java\n" +
-                    "public class HelloWorld {\n" +
-                    "    public static void main(String[] args) {\n" +
-                    "        System.out.println(\"Hello World\");\n" +
-                    "    }\n" +
-                    "}\n" +
-                    "```\n" +
-                    "```css\n" +
-                    "    <div class=\"mavonEditor\">\n" +
-                    "        <mavon-editor\n" +
-                    "                :codeStyle=\"markdownOption.codeStyle\"\n" +
-                    "                :ishljs=\"true\"\n" +
-                    "                :toolbars=\"markdownOption\"\n" +
-                    "                v-model=\"value\"/>\n" +
-                    "    </div>\n" +
-                    "```\n" +
-                    "```java\n" +
-                    "public class HelloWorld {\n" +
-                    "    public static void main(String[] args) {\n" +
-                    "        System.out.println(\"Hello World\");\n" +
-                    "    }\n" +
-                    "}\n" +
-                    "```\n"
+                blogContentValue: "",
+            }
+        },
+        //生命周期
+        watch: {
+            blogContentValue:function () {
+                this.$emit("update:content",this.blogContentValue);
+            },
+            content: function (val) {
+                console.log(val);
+                this.blogContentValue=val;
             }
         },
         methods: {
+
         }
     }
 </script>

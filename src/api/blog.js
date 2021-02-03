@@ -48,7 +48,7 @@ export function selectTagsList(data) {
 export function deleteTag(id) {
     return service.request({
         method: "get",
-        url: "/tags/deleteTags/"+id+""
+        url: "/tags/deleteTags/" + id + ""
     });
 }
 
@@ -100,7 +100,7 @@ export function selectClassifyList(data) {
 export function deleteClassify(id) {
     return service.request({
         method: "get",
-        url: "/classify/deleteClassify/"+id+""
+        url: "/classify/deleteClassify/" + id + ""
     });
 }
 
@@ -129,3 +129,56 @@ export function editClassify(data) {
         data: data
     });
 }
+
+/**
+ * 查询博客列表
+ * @param data
+ * @returns
+ */
+export function selectBlogList(data) {
+    return service.request({
+        method: "get",
+        url: `/blog/selectBlogList/${data.page}/${data.size}`,
+        data: data
+    });
+}
+
+
+/**
+ * 删除分类
+ * @param id
+ * @returns
+ */
+export function deleteBlogById(id) {
+    return service.request({
+        method: "get",
+        url: `/blog/deleteBlog/${id}`
+    });
+}
+
+/**
+ * 查询博客详情
+ * @param data
+ * @returns
+ */
+export function selectBlogById(data) {
+    return service.request({
+        method: "post",
+        url: "/blog/selectBlog",
+        data: data
+    });
+}
+
+/**
+ * 添加博客信息
+ * @param data
+ * @returns
+ */
+export function addBlog(data) {
+    return service.request({
+        method: "post",
+        url: "/blog/addBlog",
+        data: data
+    });
+}
+
