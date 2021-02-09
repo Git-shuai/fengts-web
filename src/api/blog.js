@@ -41,6 +41,31 @@ export function selectTagsList(data) {
 }
 
 /**
+ * 查询tag根据name
+ * @param data
+ * @returns
+ */
+export function selectTagByName(data) {
+    return service.request({
+        method: "post",
+        url: "/tags/selectTagByName",
+        data: data
+    });
+}
+
+/**
+ * 查询标签列表
+ * @param data
+ * @returns
+ */
+export function selectTags(data) {
+    return service.request({
+        method: "post",
+        url: "/tags/selectTags",
+        data: data
+    });
+}
+/**
  * 删除tag
  * @param id
  * @returns
@@ -88,6 +113,32 @@ export function selectClassifyList(data) {
     return service.request({
         method: "post",
         url: "/classify/selectClassifyList",
+        data: data
+    });
+}
+
+/**
+ * 查询分类根据名字
+ * @param data
+ * @returns
+ */
+export function selectClassifyByName(data) {
+    return service.request({
+        method: "post",
+        url: "/classify/selectClassifyByName",
+        data: data
+    });
+}
+
+/**
+ * 查询分类列表
+ * @param data
+ * @returns
+ */
+export function selectClassify(data) {
+    return service.request({
+        method: "post",
+        url: "/classify/selectClassify",
         data: data
     });
 }
@@ -178,6 +229,20 @@ export function addBlog(data) {
     return service.request({
         method: "post",
         url: "/blog/addBlog",
+        data: data
+    });
+}
+
+
+/**
+ * 修改博客信息
+ * @param data
+ * @returns
+ */
+export function editBlog(data) {
+    return service.request({
+        method: "post",
+        url: "/blog/editBlog",
         data: data
     });
 }

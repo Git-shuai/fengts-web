@@ -61,7 +61,8 @@
                     </div>
                     <div class="pagination">
                         <el-pagination
-                                @current-change="handleSizeChange"
+                                @current-change="handleCurrentChange"
+                                @size-change="handleSizeChange"
                                 background
                                 layout="prev, pager, next"
                                 :page-size="paginationData.pageSize"
@@ -148,7 +149,11 @@
                     this.paginationData.total = response.data.data.total;
                 }).catch()
             },
-            handleSizeChange(value) {
+            handleSizeChange(val){
+                this.paginationData.pageSize=val;
+                this.selectTagList();
+            },
+            handleCurrentChange(value) {
                 this.paginationData.page = value;
                 this.selectTagList();
             },

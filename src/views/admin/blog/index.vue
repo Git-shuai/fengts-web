@@ -99,8 +99,8 @@
                 pagination:{
                     currentPage: 1,
                     hideOnSinglePage: false,
-                    pageSizes: [10, 20, 30, 50],
-                    pageSize: 10,
+                    pageSizes: [8, 15, 30, 50],
+                    pageSize: 8,
                     total: 50
                 }
             }
@@ -155,10 +155,12 @@
                 console.log(val)
             },
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+                this.pagination.pageSize=val;
+                this.selectBlogList();
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+                this.pagination.currentPage=val;
+                this.selectBlogList();
             }
         }
     }
