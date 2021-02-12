@@ -76,17 +76,17 @@
                         </el-form-item>
                         <el-form-item label="文章类型" prop="blogType">
                             <el-select size="mini" v-model="blogDetails.isOriginal" placeholder="请选择类型">
-                                <el-option value="0" label="原创"></el-option>
-                                <el-option value="1" label="转载"></el-option>
-                                <el-option value="2" label="翻译"></el-option>
+                                <el-option :value="0" label="原创"></el-option>
+                                <el-option :value="1" label="转载"></el-option>
+                                <el-option :value="2" label="翻译"></el-option>
                             </el-select>
                         </el-form-item>
 
                         <el-form-item label="开启评论" prop="blogType">
                             <el-switch
                                     v-model="blogDetails.isComment"
-                                    active-value="0"
-                                    inactive-value="1"
+                                    :active-value="0"
+                                    :inactive-value="1"
                                     active-color="#13ce66"
                                     inactive-color="#ff4949">
                             </el-switch>
@@ -95,14 +95,14 @@
                             <el-switch
                                     v-model="blogDetails.isAdmire"
                                     active-color="#13ce66"
-                                    active-value="0"
-                                    inactive-value="1"
+                                    :active-value="0"
+                                    :inactive-value="1"
                                     inactive-color="#ff4949">
                             </el-switch>
                         </el-form-item>
 
                         <el-form-item label="文章状态" prop="blogType">
-                            <el-select size="mini" v-model="blogDetails.blogType" placeholder="请选择类型">
+                            <el-select size="mini" v-model="blogDetails.blogStatus" placeholder="请选择类型">
                                 <el-option value="草稿箱" label="草稿箱"></el-option>
                                 <el-option value="发布" label="发布"></el-option>
                                 <el-option value="回收站" label="回收站"></el-option>
@@ -148,7 +148,7 @@
                     content: "",
                     tag: "",
                     classify: "",
-                    blogType: "",
+                    createTime:"",
                     //是否原创
                     isOriginal: "",
                     //是否开启赞赏
@@ -189,7 +189,8 @@
                         this.blogDetails = response.data.data;
                         this.selectTagList = response.data.data.tagName;
                         this.selectClassifyList = response.data.data.classifyName;
-                        // console.log(this.selectTagList);
+
+                        console.log(this.blogDetails);
                         // console.log(this.selectClassifyList);
                     }).catch();
                 }
@@ -229,6 +230,7 @@
 
             //打开窗口加载函数
             openDialog() {
+                console.log(this.blogDetails);
                 //tag标签初始化
                 selectTags().then((response) => {
                     this.tagList = response.data.data;
@@ -256,8 +258,6 @@
                             return item;
                         }
                     });
-
-
                 }).catch();
             },
 
@@ -382,7 +382,7 @@
                 let classify = this.selectClassifyList.map(item => {
                     return item.id.toString()
                 });
-                if (this.blogDetails.id === "") {
+                if (this.blogDetails.id === "" || this.blogDetails.id===undefined) {
                     let data = {
                         "title": this.blogDetails.title,
                         "content": this.blogDetails.content,
@@ -392,7 +392,7 @@
                         "isOriginal": this.blogDetails.isOriginal,
                         "isAdmire": this.blogDetails.isAdmire,
                         "isComment": this.blogDetails.isComment,
-                        "blogType": this.blogDetails.blogType
+                        "blogStatus": this.blogDetails.blogStatus
                     };
                     addBlog(data).then((response) => {
                         this.$message.success(response.data.message);
@@ -405,14 +405,16 @@
                         "id": this.blogDetails.id,
                         "title": this.blogDetails.title,
                         "content": this.blogDetails.content,
+                        "createTime": this.blogDetails.createTime,
                         "readNum": "0",
                         "tag": tag,
                         "classify": classify,
                         "isOriginal": this.blogDetails.isOriginal,
                         "isAdmire": this.blogDetails.isAdmire,
                         "isComment": this.blogDetails.isComment,
-                        "blogType": this.blogDetails.blogType
+                        "blogStatus": this.blogDetails.blogStatus
                     };
+                    console.log(data);
                     editBlog(data).then((response) => {
                         this.$message.success(response.data.message);
                         this.$router.push({

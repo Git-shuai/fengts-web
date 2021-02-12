@@ -247,3 +247,17 @@ export function editBlog(data) {
     });
 }
 
+
+/**
+ * 根据查询条件查询
+ * @param data
+ * @returns
+ */
+export function selectBlogListByParam(data) {
+    return service.request({
+        method: "post",
+        url: "/blog/selectBlogListByParam",
+        data: data
+    });
+}
+

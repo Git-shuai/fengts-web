@@ -2,24 +2,25 @@
     <div class="blogList-content">
         <!--搜索-->
         <div class="search-content">
-            <el-form :inline="true" ref="formInline" :model="searchTerm" class="demo-form-inline">
-                <el-form-item class="search-form-item" label="关键字:" prop="keyword">
-                    <el-input size="small" v-model="searchTerm.keyword"></el-input>
+            <el-form :inline="true" ref="formInline" :model="searchParam" class="demo-form-inline">
+                <el-form-item class="search-form-item" label="关键字:" prop="keyWord">
+                    <el-input size="small" v-model="searchParam.keyWord"></el-input>
                 </el-form-item>
                 <el-form-item class="search-form-item" label="博客状态:" prop="blogStatus">
-                    <el-select size="small" v-model="searchTerm.blogStatus">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
+                    <el-select size="small" v-model="searchParam.blogStatus">
+                        <el-option value="草稿箱" label="草稿箱"></el-option>
+                        <el-option value="发布" label="发布"></el-option>
+                        <el-option value="回收站" label="回收站"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item class="search-form-item" label="博客分类:" prop="classification">
-                    <el-select size="small" v-model="searchTerm.classification">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
+                <el-form-item class="search-form-item" label="博客分类:" prop="classifyId">
+                    <el-select size="small" v-model="searchParam.classifyId">
+                        <el-option v-for="item in this.blogClassifyList" :key="item.id" :label="item.classifyName"
+                                   :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button size="small" type="primary" @click="submitForm('formInline')">立即创建</el-button>
+                    <el-button size="small" type="primary" @click="submitForm">查询</el-button>
                     <el-button size="small" @click="resetForm('formInline')">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -31,10 +32,10 @@
 
         <!--博客列表-->
         <div class="blog-list">
-            <el-table :default-sort = "{prop: 'date', order: 'descending'}" :data="tableData"
-                      style="width: 100%"  @selection-change="handleSelectionChange" >
-                <el-table-column  type="selection" width="55"></el-table-column>
-                <el-table-column  prop="title" label="标题" width="180"> </el-table-column>
+            <el-table :default-sort="{prop: 'date', order: 'descending'}" :data="tableData"
+                      style="width: 100%" @selection-change="handleSelectionChange">
+                <el-table-column type="selection" width="55"></el-table-column>
+                <el-table-column prop="title" label="标题" width="180"></el-table-column>
                 <el-table-column prop="auth" label="作者" width="180"></el-table-column>
                 <el-table-column prop="blogStatus" label="状态" width="100"></el-table-column>
                 <el-table-column prop="classifyName" label="分类" width="180"></el-table-column>
@@ -62,7 +63,6 @@
                 <div class="pagination-plugin">
                     <el-pagination
                             background
-                            :hide-on-single-page="pagination.hideOnSinglePage"
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
                             :current-page="pagination.currentPage"
@@ -71,6 +71,7 @@
                             layout="total, sizes, prev, pager, next, jumper"
                             :total="pagination.total">
                     </el-pagination>
+
                 </div>
             </el-col>
         </el-row>
@@ -79,27 +80,28 @@
 </template>
 
 <script>
-    import {deleteBlogById, selectBlogList} from "../../../api/blog";
+    import {deleteBlogById, selectBlogList, selectBlogListByParam, selectClassify} from "../../../api/blog";
 
     export default {
         name: "index",
         data() {
             return {
                 //搜索数据
-                dialogVisible:false,
-                searchTerm: {
-                    keyword: '',
-                    blogStatus: '',
-                    classification: ''
+                dialogVisible: false,
+                searchParam: {
+                    keyWord: '',
+                    blogStatus: "",
+                    classifyId: ''
                 },
+                blogClassifyList: [],
                 //表格数据
                 tableData: [],
                 multipleSelection: [],
                 //分页数据
-                pagination:{
+                pagination: {
                     currentPage: 1,
                     hideOnSinglePage: false,
-                    pageSizes: [8, 15, 30, 50],
+                    pageSizes: [8, 15, 30, 40],
                     pageSize: 8,
                     total: 50
                 }
@@ -107,44 +109,58 @@
         },
         created() {
             this.selectBlogList();
+            this.selectBlogClassifyList();
         },
         methods: {
-            selectBlogList(){
-                let data ={
-                  "page": this.pagination.currentPage,
-                  "size": this.pagination.pageSize
+            selectBlogList() {
+                let data = {
+                    "page": this.pagination.currentPage,
+                    "size": this.pagination.pageSize
                 };
-                selectBlogList(data).then((response)=>{
-                    this.tableData=response.data.data.records;
-                    this.pagination.total=response.data.data.total;
+                selectBlogList(data).then((response) => {
+                    this.tableData = response.data.data.records;
+                    this.pagination.total = response.data.data.total;
                 }).catch()
             },
-            deleteBlog(row){
-                deleteBlogById(row.id).then((response)=>{
+            selectBlogClassifyList() {
+                selectClassify().then((res) => {
+                    this.blogClassifyList = res.data.data;
+                }).catch()
+            },
+            deleteBlog(row) {
+                deleteBlogById(row.id).then((response) => {
                     this.$message.success(response.data.message)
                 }).catch();
+                this.selectBlogList();
             },
-            editBlog(row){
+            editBlog(row) {
                 this.$router.push({
                     name: "writeBlog",
-                    query:{
+                    query: {
                         "id": row.id
                     }
                 });
             },
-            toWrite(){
+            toWrite() {
                 this.$router.push({
                     name: "writeBlog"
                 });
             },
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
+            submitForm() {
+                let data = {
+                    "keyWord": this.searchParam.keyWord,
+                    "classifyId": this.searchParam.classifyId,
+                    "blogStatus": this.searchParam.blogStatus,
+                    "page": this.pagination.currentPage,
+                    "size": this.pagination.pageSize
+                };
+                console.log(data);
+                selectBlogListByParam(data).then((res) => {
+                    console.log(res.data.data);
+                    let data = res.data.data;
+                    this.tableData = data.records;
+                    this.pagination.total = data.total;
+                }).catch(() => {
                 });
             },
             resetForm(formName) {
@@ -155,12 +171,31 @@
                 console.log(val)
             },
             handleSizeChange(val) {
-                this.pagination.pageSize=val;
-                this.selectBlogList();
+                console.log("handleSizeChange");
+                console.log(val);
+                this.pagination.pageSize = val;
+                if (this.judgeSelectParam()) {
+                    this.submitForm();
+                } else {
+                    this.selectBlogList();
+                }
             },
             handleCurrentChange(val) {
-                this.pagination.currentPage=val;
-                this.selectBlogList();
+                console.log("handleCurrentChange");
+                console.log(val);
+                this.pagination.currentPage = val;
+                if (this.judgeSelectParam()) {
+                    this.submitForm();
+                } else {
+                    this.selectBlogList();
+                }
+            },
+            judgeSelectParam() {
+                if (this.searchParam.keyWord !== "" || this.searchParam.blogStatus !== "" || this.searchParam.classifyId !== "") {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
     }
@@ -170,23 +205,29 @@
     .blogList-content {
         background-color: #fff;
     }
-    .search-content{
+
+    .search-content {
         padding: 17px;
     }
-    .search-form-item{
+
+    .search-form-item {
         margin-right: 80px;
     }
-    .write-button{
+
+    .write-button {
         padding: 0 0 0 17px;
     }
-    .blog-list{
+
+    .blog-list {
         padding: 17px;
     }
-    .pagination-plugin{
+
+    .pagination-plugin {
         float: right;
         margin-right: 20px;
     }
-    .block{
+
+    .block {
         margin: 0 15px;
         padding-bottom: 15px;
     }
