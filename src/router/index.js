@@ -140,6 +140,74 @@ const routes = [
                 component: () => import("../views/admin/blog/tags.vue")
             }
         ]
+    },
+    {
+        path: "/admin/auth",
+        meta: {
+            name: "权限管理",
+            icon: "icon iconquanxian"
+        },
+        status: 2,
+        component: admin,
+        children: [
+            {
+                path: "/admin/userManage",
+                name: "userManage",
+                meta: {
+                    name: "用户管理",
+                    icon: "icon iconicon_yonghuguanlisubscriber"
+                },
+                component: () => import("../views/admin/auth/userManage.vue")
+            },{
+                path: "/admin/roleManage",
+                name: "roleManage",
+                meta: {
+                    name: "角色管理",
+                    icon: "icon iconnavicon-jsgl"
+                },
+                component: () => import("../views/admin/auth/roleManage.vue")
+            },{
+                path: "/admin/menuManage",
+                name: "menuManage",
+                meta: {
+                    name: "前端菜单",
+                    icon: "icon iconcaidan"
+                },
+                component: () => import("../views/admin/auth/menuManage.vue")
+            },{
+                path: "/admin/APIManage",
+                name: "APIManage",
+                meta: {
+                    name: "后端API管理",
+                    icon: "icon iconapi"
+                },
+                component: () => import("../views/admin/auth/APIManage.vue")
+            },{
+                path: "/admin/roleUser",
+                name: "roleUser",
+                meta: {
+                    name: "角色用户管理",
+                    icon: "icon iconjiaoseyonghufenpei"
+                },
+                component: () => import("../views/admin/auth/roleUser.vue")
+            },{
+                path: "/admin/userMenu",
+                name: "userMenu",
+                meta: {
+                    name: "用户菜单管理",
+                    icon: "icon iconmc-yhcd"
+                },
+                component: () => import("../views/admin/auth/userMenu.vue")
+            },{
+                path: "/admin/roleApi",
+                name: "roleApi",
+                meta: {
+                    name: "角色API管理",
+                    icon: "icon iconAPI"
+                },
+                component: () => import("../views/admin/auth/roleApi.vue")
+            }
+        ]
     }
 
 ];

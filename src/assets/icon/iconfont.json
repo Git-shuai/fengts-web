@@ -6,6 +6,62 @@
   "description": "个人网站",
   "glyphs": [
     {
+      "icon_id": "17489144",
+      "name": "API",
+      "font_class": "API",
+      "unicode": "e6d4",
+      "unicode_decimal": 59092
+    },
+    {
+      "icon_id": "3702619",
+      "name": "角色管理",
+      "font_class": "navicon-jsgl",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "4633694",
+      "name": "菜单",
+      "font_class": "caidan",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "6834874",
+      "name": "名称-用户菜单",
+      "font_class": "mc-yhcd",
+      "unicode": "e777",
+      "unicode_decimal": 59255
+    },
+    {
+      "icon_id": "12718935",
+      "name": "角色用户分配",
+      "font_class": "jiaoseyonghufenpei",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "14113143",
+      "name": "api",
+      "font_class": "api",
+      "unicode": "e9e4",
+      "unicode_decimal": 59876
+    },
+    {
+      "icon_id": "17606404",
+      "name": "权限",
+      "font_class": "quanxian1",
+      "unicode": "e6b6",
+      "unicode_decimal": 59062
+    },
+    {
+      "icon_id": "18541670",
+      "name": "icon_用户管理subscriber",
+      "font_class": "icon_yonghuguanlisubscriber",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
       "icon_id": "424648",
       "name": "菜单-路径分析 icon",
       "font_class": "caidanlujingfenxiicon",

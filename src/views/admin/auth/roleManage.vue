@@ -1,0 +1,139 @@
+<template>
+    <div class="role-manage">
+
+        <el-row :gutter="30">
+            <!--查询表单-->
+            <el-col :span="8">
+                <el-card class="box-card">
+                    <div slot="header">
+                        <span>角色管理</span>
+                    </div>
+                    <div>
+                        <el-form :model="roleForm" status-icon ref="roleForm" label-width="60px"
+                                 class="user-form">
+                            <el-form-item label="用户名:" prop="username">
+                                <el-input size="small" type="text" v-model="roleForm.username"
+                                          autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="密码:" prop="password">
+                                <el-input size="small" type="password" v-model="roleForm.password"
+                                          autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="说明:" prop="des">
+                                <el-input size="small" type="textarea" :rows="3" placeholder="请输入内容"
+                                          v-model="roleForm.des"></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button size="mini" class="btn-submit" type="primary"
+                                           @click="submitForm('roleForm')">添加用户
+                                </el-button>
+                                <el-button size="mini" class="btn-reset" @click="resetForm('roleForm')">重置</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                </el-card>
+            </el-col>
+            <!--列表-->
+            <el-col :span="16">
+                <el-card class="box-card">
+                    <div slot="header">
+                        <span>角色列表</span>
+                    </div>
+                    <div>
+                        <!--用户列表-->
+                        <div>
+                            <el-table border :data="roleTableData" style="width: 100%">
+                                <el-table-column prop="username" label="角色名" width="200"></el-table-column>
+                                <el-table-column prop="des" label="描述" width="250"></el-table-column>
+                                <el-table-column prop="createTime" label="创建时间" width="250"></el-table-column>
+                                <el-table-column prop="address" label="操作">
+                                    <template slot-scope="scope">
+                                        <el-button  type="primary" size="small" style="margin-right: 15px">编辑</el-button>
+                                        <el-popconfirm title="你确定要删除该标签吗？" @confirm="deleteBlog(scope.row)">
+                                            <el-button slot="reference" type="warning" size="small">删除</el-button>
+                                        </el-popconfirm>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+
+
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "roleManage",
+        data(){
+            return{
+                roleForm: {
+                    username: '',
+                    password: '',
+                    des: ''
+                },
+                roleTableData: [{
+                    username: '2016-05-02',
+                    des: '王小虎',
+                    createTime: '上海市普陀区金沙江路 1518 弄',
+                }, {
+                    username: '2016-05-02',
+                    des: '王小虎',
+                    createTime: '上海市普陀区金沙江路 1518 弄',
+                }, {
+                    username: '2016-05-02',
+                    des: '王小虎',
+                    createTime: '上海市普陀区金沙江路 1518 弄',
+                }, {
+                    username: '2016-05-02',
+                    des: '王小虎',
+                    createTime: '上海市普陀区金沙江路 1518 弄',
+                }]
+            }
+        },
+        methods:{
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        alert('submit!');
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            resetForm(userForm) {
+                this.$refs[userForm].resetFields();
+            },
+            onSubmit(){
+
+            }
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .btn-submit {
+        width: 47%;
+        float: left;
+    }
+
+    .btn-reset {
+        width: 47%;
+        float: right;
+    }
+
+    .user-form {
+        margin: 0 23px 15px 10px;
+    }
+    .search-input {
+        margin-left: 15px;
+    }
+    .search-btn{
+        margin-left: 25px;
+    }
+</style>
