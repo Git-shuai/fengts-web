@@ -197,7 +197,7 @@ const routes = [
                     name: "用户菜单管理",
                     icon: "icon iconmc-yhcd"
                 },
-                component: () => import("../views/admin/auth/userMenu.vue")
+                component: () => import("../views/admin/auth/roleMenu.vue")
             },{
                 path: "/admin/roleApi",
                 name: "roleApi",

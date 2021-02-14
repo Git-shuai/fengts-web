@@ -5,7 +5,7 @@
             <el-col :span="8">
                 <el-card class="box-card">
                     <div slot="header">
-                        <span>角色用户编辑</span>
+                        <span>角色菜单管理</span>
                     </div>
                     <div class="role-table-8">
                         <el-table
@@ -19,11 +19,9 @@
                                 <template slot-scope="scope">{{ scope.row.date }}</template>
                             </el-table-column>
                             <el-table-column prop="name" label="角色名称" width="150"></el-table-column>
-                            <el-table-column label="分配用户">
+                            <el-table-column label="分配菜单">
                                 <template>
-                                    <el-button @click="addMenu" size="mini" style="margin-right: 15px;width: 150px">
-                                        查看分配
-                                    </el-button>
+                                    <el-button @click="addMenu" size="mini" style="margin-right: 15px;width: 150px">查看分配</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -34,16 +32,14 @@
             <el-col :span="16">
                 <el-card class="box-card">
                     <div slot="header">
-                        <span>用户列表</span>
+                        <span>角色菜单列表</span>
                     </div>
                     <div>
                         <!--用户列表-->
                         <div>
-                            <el-button v-if="warningStatus" size="mini" type="warning" class="warning-btn">正在给【】进行菜单配置
-                            </el-button>
+                            <el-button v-if="warningStatus"  size="mini" type="warning" class="warning-btn">正在给【】进行菜单配置</el-button>
                             <div class="role-table-16">
-                                <el-button @click="saveMenu" size="mini" style="margin-right: 15px;width: 150px">保存配置
-                                </el-button>
+                                <el-button @click="saveMenu" size="mini" style="margin-right: 15px;width: 150px">保存配置</el-button>
                                 <div style="height: 20px"></div>
                                 <el-table
                                         border
@@ -52,8 +48,14 @@
                                         tooltip-effect="dark"
                                         style="width: 100%"
                                         @selection-change="handleSelectionChange">
-                                    <el-table-column type="selection" width="80"></el-table-column>
-                                    <el-table-column prop="address" label="用户名" width="300"></el-table-column>
+                                    <el-table-column
+                                            type="selection"
+                                            width="60">
+                                    </el-table-column>
+                                    <el-table-column prop="address" label="父级" width="200">
+                                        <template slot-scope="scope">{{ scope.row.date }}</template>
+                                    </el-table-column>
+                                    <el-table-column prop="name" label="菜单名称" width="200"></el-table-column>
                                     <el-table-column prop="name" label="说明" width="300"></el-table-column>
                                     <el-table-column prop="name" label="设置情况"></el-table-column>
                                 </el-table>
@@ -69,7 +71,7 @@
 
 <script>
     export default {
-        name: "roleUser",
+        name: "userMenu",
         data() {
             return {
                 roleData: [{
@@ -107,11 +109,11 @@
             }
         },
         methods: {
-            addMenu() {
-                this.warningStatus = true;
+            addMenu(){
+              this.warningStatus=true;
             },
-            saveMenu() {
-                this.warningStatus = false;
+            saveMenu(){
+                this.warningStatus=false;
             },
             toggleSelection(rows) {
                 if (rows) {
