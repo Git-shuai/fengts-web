@@ -157,7 +157,7 @@
 
 <script>
     import {validateCode, validateEmail, validatePwd} from "../../utils/validate";
-    import {getCode, registeredUser, login} from "../../api/user";
+    import {getCode, registeredUser, login} from "../../api/auth";
     import {setMenu, setToken, setUsername} from "../../utils/app";
 
     export default {
