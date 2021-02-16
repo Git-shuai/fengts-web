@@ -145,7 +145,7 @@
             resetForm(userForm) {
                 this.$refs[userForm].resetFields();
             },
-            onSubmit() {
+            editRole() {
 
             },
             //合并单元格

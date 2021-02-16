@@ -92,3 +92,54 @@ export function updateUser(data) {
         data: data
     });
 }
+
+/**
+ * 查询角色列表
+ * @param data
+ * @returns
+ */
+export function selectRole(data) {
+    return service.request({
+        method: "post",
+        url: "/role/selectRole",
+        data: data
+    });
+}
+
+/**
+ * 添加角色
+ * @param data
+ * @returns
+ */
+export function addRole(data) {
+    return service.request({
+        method: "post",
+        url: "/role/addRole",
+        data: data
+    });
+}
+
+/**
+ * 删除角色
+ * @param data
+ * @returns
+ */
+export function deleteRole(roleId) {
+    return service.request({
+        method: "delete",
+        url: `/role/deleteRole/${roleId}`
+    });
+}
+
+/**
+ * 更新角色
+ * @param data
+ * @returns
+ */
+export function editRole(data) {
+    return service.request({
+        method: "put",
+        url: "/role/editRole",
+        data: data
+    });
+}
