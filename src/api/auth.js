@@ -143,3 +143,42 @@ export function editRole(data) {
         data: data
     });
 }
+
+/**
+ * 查询父菜单节点
+ * @param data
+ * @returns
+ */
+export function selectMenuParentList() {
+    return service.request({
+        method: "get",
+        url: "/menu/selectMenuParentList"
+    });
+}
+
+
+/**
+ * 添加菜单
+ * @param data
+ * @returns
+ */
+export function addMenu(data) {
+    return service.request({
+        method: "post",
+        url: "/menu/addMenu",
+        data: data
+    });
+}
+
+/**
+ * 查询菜单列表
+ * @param data
+ * @returns
+ */
+export function selectMenuList(data) {
+    return service.request({
+        method: "post",
+        url: "/menu/selectMenuList",
+        data: data
+    });
+}
