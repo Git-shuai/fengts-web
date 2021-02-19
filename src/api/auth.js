@@ -182,3 +182,56 @@ export function selectMenuList(data) {
         data: data
     });
 }
+
+
+/**
+ * 更新菜单列表
+ * @param data
+ * @returns
+ */
+export function editMenu(data) {
+    return service.request({
+        method: "put",
+        url: "/menu/editMenu",
+        data: data
+    });
+}
+
+
+/**
+ * 删除菜单
+ * @param data
+ * @returns
+ */
+export function deleteMenu(menuId) {
+    return service.request({
+        method: "delete",
+        url: `/menu/deleteMenu/${menuId}`
+    });
+}
+
+/**
+ * 查询父菜单
+ * @param data
+ * @returns
+ */
+export function selectMenuById(menuId) {
+    return service.request({
+        method: "get",
+        url: `/menu/selectMenuById/${menuId}`
+    });
+}
+
+
+/**
+ * 按条件查询菜单
+ * @param data
+ * @returns
+ */
+export function selectMenuByParam(data) {
+    return service.request({
+        method: "post",
+        url: "/menu/selectMenuByParam",
+        data: data
+    });
+}
