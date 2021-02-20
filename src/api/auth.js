@@ -235,3 +235,67 @@ export function selectMenuByParam(data) {
         data: data
     });
 }
+
+/**
+ * 分页查询API
+ * @param data
+ * @returns
+ */
+export function selectPermission(data) {
+    return service.request({
+        method: "post",
+        url: "/permission/selectPermission",
+        data: data
+    });
+}
+
+/**
+ * 条件查询API
+ * @param data
+ * @returns
+ */
+export function selectPermissionByParam(data) {
+    return service.request({
+        method: "post",
+        url: "/permission/selectPermissionByParam",
+        data: data
+    });
+}
+
+/**
+ * 添加API
+ * @param data
+ * @returns
+ */
+export function addPermission(data) {
+    return service.request({
+        method: "post",
+        url: "/permission/addPermission",
+        data: data
+    });
+}
+
+/**
+ * 修改API
+ * @param data
+ * @returns
+ */
+export function editPermission(data) {
+    return service.request({
+        method: "put",
+        url: "/permission/editPermission",
+        data: data
+    });
+}
+
+/**
+ * 删除API
+ * @param data
+ * @returns
+ */
+export function deletePermission(perId) {
+    return service.request({
+        method: "delete",
+        url: `/permission/deletePermission/${perId}`
+    });
+}
