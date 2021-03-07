@@ -15,13 +15,11 @@
                                 tooltip-effect="dark"
                                 style="width: 100%"
                                 @selection-change="handleSelectionChange">
-                            <el-table-column prop="address" label="角色编码" width="150">
-                                <template slot-scope="scope">{{ scope.row.date }}</template>
-                            </el-table-column>
-                            <el-table-column prop="name" label="角色名称" width="150"></el-table-column>
+                            <el-table-column prop="roleName" label="角色编码" width="150"></el-table-column>
+                            <el-table-column prop="des" label="角色名称" width="150"></el-table-column>
                             <el-table-column label="分配用户">
-                                <template>
-                                    <el-button @click="addMenu" size="mini" style="margin-right: 15px;width: 150px">
+                                <template slot-scope="scope">
+                                    <el-button @click="addMenu(scope.row)" size="mini" style="margin-left: 6px;width: 150px">
                                         查看分配
                                     </el-button>
                                 </template>
@@ -39,27 +37,28 @@
                     <div>
                         <!--用户列表-->
                         <div>
-                            <el-button v-if="warningStatus" size="mini" type="warning" class="warning-btn">正在给【】进行菜单配置
+                            <el-button v-if="warningStatus" size="mini" type="warning" class="warning-btn">
+                                正在给【<span style="color: #df5000;font-weight: bold">{{roleObject.roleName}}({{roleObject.des}})</span>】分配用户
                             </el-button>
                             <div class="role-table-16">
-                                <el-button @click="saveMenu" size="mini" style="margin-right: 15px;width: 150px">保存配置
-                                </el-button>
+                                <el-button v-if="warningStatus" @click="saveMenu" type="primary" size="mini" style="margin-right: 15px;width: 150px">保存配置 </el-button>
+                                <el-button v-if="warningStatus" @click="toggleSelection()" type="info" size="mini" style="margin-right: 15px;width: 150px">取消选择 </el-button>
+                                <el-button v-if="warningStatus" @click="cancel" type="warning" size="mini" style="margin-right: 15px;width: 150px">取消分配 </el-button>
                                 <div style="height: 20px"></div>
                                 <el-table
                                         border
                                         ref="multipleTable"
-                                        :data="roleData"
+                                        :data="userData"
                                         tooltip-effect="dark"
                                         style="width: 100%"
                                         @selection-change="handleSelectionChange">
                                     <el-table-column type="selection" width="80"></el-table-column>
-                                    <el-table-column prop="address" label="用户名" width="300"></el-table-column>
-                                    <el-table-column prop="name" label="说明" width="300"></el-table-column>
-                                    <el-table-column prop="name" label="设置情况"></el-table-column>
+                                    <el-table-column prop="username" label="用户名" width="300"></el-table-column>
+                                    <el-table-column prop="des" label="说明" width="300"></el-table-column>
+                                    <el-table-column prop="setup" label="设置情况"></el-table-column>
                                 </el-table>
                             </div>
                         </div>
-
                     </div>
                 </el-card>
             </el-col>
@@ -68,50 +67,86 @@
 </template>
 
 <script>
+    import {addUserRoleList, selectRole, selectUserList, selectUserRoleList} from "../../../api/auth";
+
     export default {
         name: "roleUser",
         data() {
             return {
-                roleData: [{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-08',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-06',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-07',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }],
+                roleObject: {},
+                userIdList: [],
+                roleData: [],
+                userData:[],
                 multipleSelection: [],
                 //警告框是否显示
                 warningStatus: false
             }
         },
+        created() {
+            //查询用户角色
+            this.selectRoleList();
+            //查询用户信息
+            this.selectUserList();
+        },
+
         methods: {
-            addMenu() {
-                this.warningStatus = true;
+            //查询用户角色
+            selectRoleList(){
+                let data={
+                    "page": 1,
+                    "size": 1000
+                };
+                selectRole(data).then((res)=>{
+                    this.roleData=res.data.data.records;
+                }).catch()
             },
+            //查询用户信息
+            selectUserList(){
+                let data={
+                    "page": 1,
+                    "size": 100
+                };
+                selectUserList(data).then((res)=>{
+                    this.userData=res.data.data.records;
+                }).catch()
+            },
+            //查看分配按钮
+            addMenu(val) {
+                this.warningStatus = true;
+                this.roleObject=val;
+                this.toggleSelection();
+                let data={
+                    "roleId": this.roleObject.roleId
+                }
+                selectUserRoleList(data).then((res)=>{
+                    let userList = res.data.data;
+                    let data =this.userData.filter(item=>{
+                        item.setup="";
+                        for(let i=0;i<userList.length;i++){
+                            if (item.userId===userList[i].userId){
+                                item.setup="已设置";
+                                return item;
+                            }
+                        }
+                    });
+                    this.toggleSelection(data);
+                }).catch()
+            },
+            //保存配置按钮
             saveMenu() {
-                this.warningStatus = false;
+                let data={
+                    "roleId": this.roleObject.roleId,
+                    "userIds": this.userIdList
+                };
+                addUserRoleList(data).then((response)=>{
+                    console.log(response.data);
+                    this.$message.success(response.data.message);
+                    this.warningStatus = false;
+                }).catch()
+            },
+            cancel(){
+                this.warningStatus=false;
+                this.toggleSelection();
             },
             toggleSelection(rows) {
                 if (rows) {
@@ -123,7 +158,7 @@
                 }
             },
             handleSelectionChange(val) {
-                this.multipleSelection = val;
+                this.userIdList=val.map(item => {return item.userId});
             }
         }
     }

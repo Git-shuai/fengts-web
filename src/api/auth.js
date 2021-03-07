@@ -299,3 +299,29 @@ export function deletePermission(perId) {
         url: `/permission/deletePermission/${perId}`
     });
 }
+
+/**
+ * 添加（更新）用户角色列表
+ * @param data
+ * @returns
+ */
+export function addUserRoleList(data) {
+    return service.request({
+        method: "post",
+        url: "/userRole/addUserRoleList",
+        data: data
+    });
+}
+
+/**
+ * 查看用户角色列表
+ * @param data
+ * @returns
+ */
+export function selectUserRoleList(data) {
+    return service.request({
+        method: "post",
+        url: "/userRole/selectUserRoleList",
+        data: data
+    });
+}
