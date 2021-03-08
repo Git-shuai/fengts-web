@@ -83,7 +83,6 @@
 <script>
     import {
         addExp,
-        addUserRoleList,
         selectMenuList,
         selectRole,
         selectRoleMenuList
