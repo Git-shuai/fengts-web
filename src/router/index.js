@@ -191,10 +191,10 @@ const routes = [
                 },
                 component: () => import("../views/admin/auth/roleUser.vue")
             },{
-                path: "/admin/userMenu",
+                path: "/admin/roleMenu",
                 name: "userMenu",
                 meta: {
-                    name: "用户菜单管理",
+                    name: "角色菜单管理",
                     icon: "icon iconmc-yhcd"
                 },
                 component: () => import("../views/admin/auth/roleMenu.vue")

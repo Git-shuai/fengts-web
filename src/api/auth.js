@@ -325,3 +325,55 @@ export function selectUserRoleList(data) {
         data: data
     });
 }
+
+/**
+ * 查看用户角色列表
+ * @param data
+ * @returns
+ */
+export function selectRoleMenuList(data) {
+    return service.request({
+        method: "post",
+        url: "/roleMenu/selectRoleMenuList",
+        data: data
+    });
+}
+
+/**
+ * 查看用户角色列表
+ * @param data
+ * @returns
+ */
+export function addExp(data) {
+    return service.request({
+        method: "post",
+        url: "/roleMenu/addExp",
+        data: data
+    });
+}
+
+/**
+ * 批量添加角色下的API
+ * @param data
+ * @returns
+ */
+export function addAPIExp(data) {
+    return service.request({
+        method: "post",
+        url: "/rolePermission/addAPIExp",
+        data: data
+    });
+}
+
+/**
+ * 查询角色下的API
+ * @param data
+ * @returns
+ */
+export function selectAPIListExp(data) {
+    return service.request({
+        method: "post",
+        url: "/rolePermission/selectAPIListExp",
+        data: data
+    });
+}

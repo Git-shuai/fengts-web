@@ -120,7 +120,7 @@
                 }
                 selectUserRoleList(data).then((res)=>{
                     let userList = res.data.data;
-                    let data =this.userData.filter(item=>{
+                    let data =this.userData.map(item=>{
                         item.setup="";
                         for(let i=0;i<userList.length;i++){
                             if (item.userId===userList[i].userId){
@@ -158,7 +158,11 @@
                 }
             },
             handleSelectionChange(val) {
-                this.userIdList=val.map(item => {return item.userId});
+                if (val===null) {
+                    this.userIdList = val.map(item => {
+                        return item.userId
+                    });
+                }
             }
         }
     }

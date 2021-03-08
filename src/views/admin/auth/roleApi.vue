@@ -15,13 +15,13 @@
                                 tooltip-effect="dark"
                                 style="width: 100%"
                                 @selection-change="handleSelectionChange">
-                            <el-table-column prop="address" label="角色编码" width="150">
-                                <template slot-scope="scope">{{ scope.row.date }}</template>
-                            </el-table-column>
-                            <el-table-column prop="name" label="角色名称" width="150"></el-table-column>
-                            <el-table-column label="分配API">
-                                <template>
-                                    <el-button @click="addMenu" size="mini" style="margin-right: 15px;width: 150px">查看分配</el-button>
+                            <el-table-column prop="roleName" label="角色编码" width="150"></el-table-column>
+                            <el-table-column prop="des" label="角色名称" width="150"></el-table-column>
+                            <el-table-column label="分配用户">
+                                <template slot-scope="scope">
+                                    <el-button @click="addMenu(scope.row)" size="mini" style="margin-left: 6px;width: 150px">
+                                        查看分配
+                                    </el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -37,14 +37,18 @@
                     <div>
                         <!--用户列表-->
                         <div>
-                            <el-button v-if="warningStatus"  size="mini" type="warning" class="warning-btn">正在给【】进行菜单配置</el-button>
+                            <el-button v-if="warningStatus"  size="mini" type="warning" class="warning-btn">
+                                正在给【<span style="color: #df5000;font-weight: bold">{{roleObject.roleName}}({{roleObject.des}})</span>】进行前端菜单配置
+                            </el-button>
                             <div class="role-table-16">
-                                <el-button @click="saveMenu" size="mini" style="margin-right: 15px;width: 150px">保存配置</el-button>
+                                <el-button v-if="warningStatus" @click="saveMenu" type="primary" size="mini" style="margin-right: 15px;width: 150px">保存配置 </el-button>
+                                <el-button v-if="warningStatus" @click="toggleSelection()" type="info" size="mini" style="margin-right: 15px;width: 150px">取消选择 </el-button>
+                                <el-button v-if="warningStatus" @click="cancel" type="warning" size="mini" style="margin-right: 15px;width: 150px">取消分配 </el-button>
                                 <div style="height: 20px"></div>
                                 <el-table
                                         border
                                         ref="multipleTable"
-                                        :data="roleData"
+                                        :data="APIData"
                                         tooltip-effect="dark"
                                         style="width: 100%"
                                         @selection-change="handleSelectionChange">
@@ -52,12 +56,11 @@
                                             type="selection"
                                             width="60">
                                     </el-table-column>
-                                    <el-table-column prop="address" label="父级" width="200">
-                                        <template slot-scope="scope">{{ scope.row.date }}</template>
-                                    </el-table-column>
-                                    <el-table-column prop="name" label="菜单名称" width="200"></el-table-column>
-                                    <el-table-column prop="name" label="说明" width="300"></el-table-column>
-                                    <el-table-column prop="name" label="设置情况"></el-table-column>
+                                    <el-table-column prop="perName" label="API中文名" width="180"></el-table-column>
+                                    <el-table-column prop="perApiUrl" label="请求地址" width="250"></el-table-column>
+                                    <el-table-column prop="perMethod" label="请求方式" width="100"></el-table-column>
+                                    <el-table-column prop="des" label="描述" width="250"></el-table-column>
+                                    <el-table-column prop="setup" label="设置情况"></el-table-column>
                                 </el-table>
                             </div>
                         </div>
@@ -70,50 +73,77 @@
 </template>
 
 <script>
+    import {addAPIExp, selectAPIListExp, selectPermission, selectRole} from "../../../api/auth";
+
     export default {
         name: "roleApi",
         data() {
             return {
-                roleData: [{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-08',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-06',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-07',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }],
+                roleObject:{},
+                apiIdList:[],
+                roleData: [],
+                APIData:[],
                 multipleSelection: [],
                 //警告框是否显示
                 warningStatus: false
             }
         },
+        created() {
+            this.selectRoleList();
+            this.selectAPIList();
+        },
         methods: {
-            addMenu(){
-                this.warningStatus=true;
+            //查询用户角色
+            selectRoleList(){
+                let data={
+                    "page": 1,
+                    "size": 1000
+                };
+                selectRole(data).then((res)=>{
+                    this.roleData=res.data.data.records;
+                }).catch()
+            },
+            //查询API信息
+            selectAPIList(){
+                let data = {
+                    "page": 1,
+                    "size": 1000
+                };
+                selectPermission(data).then((res)=>{
+                    this.APIData=res.data.data.records;
+                }).catch()
+            },
+            addMenu(val){
+                this.warningStatus = true;
+                this.roleObject = val;
+                this.toggleSelection();
+                let data = {
+                    "roleId": this.roleObject.roleId
+                }
+                selectAPIListExp(data).then((res) => {
+                    let apiList = res.data.data;
+                    let data = this.APIData.map(item => {
+                        item.setup = "";
+                        for (let i = 0; i < apiList.length; i++) {
+                            if (item.perId === apiList[i].perId) {
+                                item.setup = "已设置";
+                                return item;
+                            }
+                        }
+                    });
+                    this.toggleSelection(data);
+                }).catch()
             },
             saveMenu(){
-                this.warningStatus=false;
+                let data = {
+                    "roleId": this.roleObject.roleId,
+                    "apiIds": this.apiIdList
+                };
+                addAPIExp(data).then((response) => {
+                    this.$message.success(response.data.message);
+                    this.warningStatus = false;
+                }).catch()
+                this.toggleSelection();
             },
             toggleSelection(rows) {
                 if (rows) {
@@ -125,8 +155,16 @@
                 }
             },
             handleSelectionChange(val) {
-                this.multipleSelection = val;
-            }
+                if (val===null) {
+                    this.apiIdList = val.map(item => {
+                        return item.perId
+                    });
+                }
+            },
+            cancel(){
+                this.warningStatus=false;
+                this.toggleSelection();
+            },
         }
     }
 </script>
