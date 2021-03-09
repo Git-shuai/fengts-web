@@ -32,7 +32,7 @@ export function removeUsername() {
 }
 
 export function setMenu(menuUrl) {
-    return cookie.set(menuList,menuUrl);
+    return cookie.set(menuList,JSON.stringify(menuUrl));
 }
 
 export function getMenu() {

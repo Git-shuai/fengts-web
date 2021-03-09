@@ -56,11 +56,10 @@
                                             type="selection"
                                             width="60">
                                     </el-table-column>
-                                    <el-table-column prop="perName" label="API中文名" width="180"></el-table-column>
+                                    <el-table-column prop="perName" label="API中文名" width="200"></el-table-column>
                                     <el-table-column prop="perApiUrl" label="请求地址" width="250"></el-table-column>
-                                    <el-table-column prop="perMethod" label="请求方式" width="100"></el-table-column>
-                                    <el-table-column prop="des" label="描述" width="250"></el-table-column>
-                                    <el-table-column prop="setup" label="设置情况"></el-table-column>
+                                    <el-table-column prop="perMethod" label="请求方式" width="120"></el-table-column>
+                                    <el-table-column prop="des" label="描述"></el-table-column>
                                 </el-table>
                             </div>
                         </div>
@@ -122,11 +121,9 @@
                 }
                 selectAPIListExp(data).then((res) => {
                     let apiList = res.data.data;
-                    let data = this.APIData.map(item => {
-                        item.setup = "";
+                    let data = this.APIData.filter(item => {
                         for (let i = 0; i < apiList.length; i++) {
                             if (item.perId === apiList[i].perId) {
-                                item.setup = "已设置";
                                 return item;
                             }
                         }
@@ -139,6 +136,7 @@
                     "roleId": this.roleObject.roleId,
                     "apiIds": this.apiIdList
                 };
+                console.log(data);
                 addAPIExp(data).then((response) => {
                     this.$message.success(response.data.message);
                     this.warningStatus = false;
@@ -155,11 +153,9 @@
                 }
             },
             handleSelectionChange(val) {
-                if (val===null) {
                     this.apiIdList = val.map(item => {
                         return item.perId
                     });
-                }
             },
             cancel(){
                 this.warningStatus=false;

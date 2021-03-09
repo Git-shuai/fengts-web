@@ -65,10 +65,9 @@
                                     </el-table-column>
                                     <el-table-column prop="parentName" label="父级" width="200">
                                     </el-table-column>
-                                    <el-table-column prop="menuName" label="菜单英文名称" width="150"></el-table-column>
-                                    <el-table-column prop="menuItemName" label="菜单中文名称" width="120"></el-table-column>
-                                    <el-table-column prop="menuDes" label="说明" width="250"></el-table-column>
-                                    <el-table-column prop="setup" label="设置情况"></el-table-column>
+                                    <el-table-column prop="menuName" label="菜单英文名称" width="250"></el-table-column>
+                                    <el-table-column prop="menuItemName" label="菜单中文名称" width="250"></el-table-column>
+                                    <el-table-column prop="menuDes" label="说明"></el-table-column>
                                 </el-table>
                             </div>
                         </div>
@@ -123,7 +122,6 @@
                     "size": 1000
                 };
                 selectMenuList(data).then((res) => {
-                    console.log(res.data.data.records);
                     this.menuData = res.data.data.records;
                 }).catch()
             },
@@ -136,11 +134,9 @@
                 }
                 selectRoleMenuList(data).then((res) => {
                     let menuList = res.data.data;
-                    let data = this.menuData.map(item => {
-                        item.setup = "";
+                    let data = this.menuData.filter(item => {
                         for (let i = 0; i < menuList.length; i++) {
                             if (item.menuId === menuList[i].menuId) {
-                                item.setup = "已设置";
                                 return item;
                             }
                         }
@@ -173,11 +169,9 @@
                 }
             },
             handleSelectionChange(val) {
-                if (val===null) {
-                    this.menuIdList = val.map(item => {
+                this.menuIdList = val.map(item => {
                         return item.menuId
                     });
-                }
             }
         }
     }

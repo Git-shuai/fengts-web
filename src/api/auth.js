@@ -14,6 +14,19 @@ export function registeredUser(data) {
 }
 
 /**
+ * 用户退出
+ * @param data
+ * @returns
+ */
+export function logout(data) {
+    return service.request({
+        method: "post",
+        url: "/logout",
+        data: data
+    });
+}
+
+/**
  * 用户登录
  * @param data
  * @returns
@@ -63,6 +76,31 @@ export function selectUserListByParam(data) {
     return service.request({
         method: "post",
         url: "/selectUserListByParam",
+        data: data
+    });
+}
+
+/**
+ * 根据条件查询用户列表
+ * @param data
+ * @returns
+ */
+export function queryUserByUsername(username) {
+    return service.request({
+        method: "get",
+        url: `/queryUserByUsername/${username}`
+    });
+}
+
+/**
+ * 根据条件查询用户列表
+ * @param data
+ * @returns
+ */
+export function updateUserByUsernamePassword(data) {
+    return service.request({
+        method: "post",
+        url: "/updateUserByUsernamePassword",
         data: data
     });
 }

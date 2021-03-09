@@ -54,8 +54,7 @@
                                         @selection-change="handleSelectionChange">
                                     <el-table-column type="selection" width="80"></el-table-column>
                                     <el-table-column prop="username" label="用户名" width="300"></el-table-column>
-                                    <el-table-column prop="des" label="说明" width="300"></el-table-column>
-                                    <el-table-column prop="setup" label="设置情况"></el-table-column>
+                                    <el-table-column prop="des" label="说明"></el-table-column>
                                 </el-table>
                             </div>
                         </div>
@@ -120,11 +119,9 @@
                 }
                 selectUserRoleList(data).then((res)=>{
                     let userList = res.data.data;
-                    let data =this.userData.map(item=>{
-                        item.setup="";
+                    let data =this.userData.filter(item=>{
                         for(let i=0;i<userList.length;i++){
                             if (item.userId===userList[i].userId){
-                                item.setup="已设置";
                                 return item;
                             }
                         }
@@ -158,11 +155,9 @@
                 }
             },
             handleSelectionChange(val) {
-                if (val===null) {
                     this.userIdList = val.map(item => {
                         return item.userId
                     });
-                }
             }
         }
     }

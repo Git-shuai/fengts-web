@@ -208,7 +208,29 @@ const routes = [
                 component: () => import("../views/admin/auth/roleApi.vue")
             }
         ]
-    }
+    },
+    {
+        path: "/admin/user",
+        name: "adminUser",
+        redirect: "/admin/blogList",
+        meta: {
+            name: "个人信息",
+            icon: "icon iconbokeblogger3"
+        },
+        status: 2,
+        component: admin,
+        children: [
+            {
+                path: "/admin/perInfo",
+                name: "adminPerInfo",
+                meta: {
+                    name: "个人资料",
+                    icon: "icon iconbokeblogger3"
+                },
+                component: () => import("../views/admin/user/perInfo")
+            }
+        ]
+    },
 
 ];
 
