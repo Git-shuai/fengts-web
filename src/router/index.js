@@ -66,14 +66,16 @@ const routes = [
                 component: () => import("../views/message/index.vue")
             }
         ]
-    }, {
+    },
+    {
         path: "/login",
         name: "login",
         meta: {
             name: "登录"
         },
         component: () => import("../views/admin/login")
-    }, {
+    },
+    {
         path: "/admin",
         name: "admin",
         redirect: "/admin/dashBoard",
@@ -212,7 +214,6 @@ const routes = [
     {
         path: "/admin/user",
         name: "adminUser",
-        redirect: "/admin/blogList",
         meta: {
             name: "个人信息",
             icon: "icon iconbokeblogger3"
@@ -231,6 +232,36 @@ const routes = [
             }
         ]
     },
+    {
+        path: "/admin/recycle",
+        name: "adminRecycle",
+        meta: {
+            name: "回收站",
+            icon: "icon iconbokeblogger3"
+        },
+        status: 2,
+        component: admin,
+        children: [
+            {
+                path: "/admin/recycleBlog",
+                name: "adminRecycleBlog",
+                meta: {
+                    name: "回收站",
+                    icon: "icon iconbokeblogger3"
+                },
+                component: () => import("../views/admin/recycle/recycle")
+            },
+            {
+                path: "/admin/draftBlog",
+                name: "adminDraftBlog",
+                meta: {
+                    name: "草稿箱",
+                    icon: "icon iconbokeblogger3"
+                },
+                component: () => import("../views/admin/recycle/draft")
+            }
+        ]
+    }
 
 ];
 

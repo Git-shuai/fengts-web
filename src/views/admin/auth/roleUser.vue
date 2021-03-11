@@ -155,9 +155,9 @@
                 }
             },
             handleSelectionChange(val) {
-                    this.userIdList = val.map(item => {
-                        return item.userId
-                    });
+                this.userIdList = val.map(item => {
+                    return item.userId
+                });
             }
         }
     }

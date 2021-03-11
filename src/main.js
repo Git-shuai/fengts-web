@@ -20,6 +20,9 @@ import GlobalFun from "./utils/global_fun";
 import VueCookies from 'vue-cookies';
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+
+import * as echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 // use
 Vue.use(mavonEditor);
 Vue.use(VueCookies);

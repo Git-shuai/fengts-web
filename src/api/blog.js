@@ -193,7 +193,18 @@ export function selectBlogList(data) {
         data: data
     });
 }
-
+/**
+ * 查询博客列表
+ * @param data
+ * @returns
+ */
+export function selectRecycleBlogList(data) {
+    return service.request({
+        method: "get",
+        url: `/blog/selectRecycleBlogList/${data.page}/${data.size}`,
+        data: data
+    });
+}
 
 /**
  * 删除分类
@@ -204,6 +215,17 @@ export function deleteBlogById(id) {
     return service.request({
         method: "get",
         url: `/blog/deleteBlog/${id}`
+    });
+}
+/**
+ * 删除分类
+ * @param id
+ * @returns
+ */
+export function deleteRecycleBlogById(id)  {
+    return service.request({
+        method: "get",
+        url: `/blog/deleteRecycleBlogById/${id}`
     });
 }
 
@@ -261,3 +283,27 @@ export function selectBlogListByParam(data) {
     });
 }
 
+/**
+ * 根据查询条件查询
+ * @param data
+ * @returns
+ */
+export function selectBlogListOfEcharts() {
+    return service.request({
+        method: "get",
+        url: "/blog/selectBlogListOfEcharts"
+    });
+}
+
+/**
+ * 批量删除（）
+ * @param data
+ * @returns
+ */
+export function deleteBatchIdList(data) {
+    return service.request({
+        method: "post",
+        url: "/blog/deleteBatchIdList",
+        data: data
+    });
+}

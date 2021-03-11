@@ -385,6 +385,7 @@
                 if (this.blogDetails.id === "" || this.blogDetails.id===undefined) {
                     let data = {
                         "title": this.blogDetails.title,
+                        "auth": getUsername(),
                         "content": this.blogDetails.content,
                         "readNum": "0",
                         "tag": tag,

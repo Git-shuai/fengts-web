@@ -53,6 +53,24 @@
             </el-col>
         </el-row>
         <div style="height: 15px"></div>
+<!--        <el-row :gutter="30">-->
+<!--            <el-col :span="8">-->
+<!--                <div id="1" class="echarts-class">-->
+<!--                    标签，分类占总比的比例图-->
+<!--                </div>-->
+<!--            </el-col>-->
+<!--            <el-col :span="8">-->
+<!--                <div id="2" class="echarts-class">-->
+<!--                    标签里面各自的比例图-->
+<!--                </div>-->
+<!--            </el-col>-->
+<!--            <el-col :span="8">-->
+<!--                <div id="3" class="echarts-class">-->
+<!--                    分类里面各自的种类占比-->
+<!--                </div>-->
+<!--            </el-col>-->
+<!--        </el-row>-->
+        <div style="height: 15px"></div>
         <el-row :gutter="15">
             <el-col :span="10">
                 <el-card class="box-card">
@@ -95,18 +113,18 @@
                         <span>统计</span>
                     </div>
                     <div>
-                        柱状图（几个分类，下面有几个文章，作者动态，一个月中几天编写文章修改计划）
+                        <div id="echarts" style="height: 450px;background-color: #FFF"> </div>
                     </div>
                 </el-card>
             </el-col>
         </el-row>
+
     </div>
 </template>
 
 <script>
-    import {selectBlogList} from "../../../api/blog";
+    import {selectBlogList, selectBlogListOfEcharts, selectBlogTagClassify} from "../../../api/blog";
     import {selectUserList} from "../../../api/auth";
-
     export default {
         name: "index",
         data() {
@@ -115,14 +133,60 @@
                 commentNum: '0',
                 readNum: '0',
                 userNum: '0',
-                articleList: []
+                articleList: [],
+                blogMon:[],
+                blogNum:[],
             }
         },
         created() {
             this.loadArticleList();
             this.selectUserList();
         },
+        mounted() {
+            this.loadEcharts();
+        },
         methods: {
+
+            //加载图
+            loadEcharts(){
+                //柱状图
+                selectBlogListOfEcharts().then((res)=>{
+                    let data = res.data.data;
+                    this.blogMon=data.map(item => {
+                        return item.blogMon;
+                    });
+                    this.blogNum=data.map(item => {
+                        return item.blogNum;
+                    });
+                    //基于准备好的dom，初始化echarts实例
+                    var chartDom = document.getElementById('echarts');
+                    var myChart = this.$echarts.init(chartDom);
+                    var option;
+                    option = {
+                        // 全局调色盘。
+                        color: ['#ef984a'],
+
+                        xAxis: {
+                            type: 'category',
+                            data: this.blogMon,
+                            name: '月份'
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: '博客/数量'
+                        },
+                        series: [{
+                            data: this.blogNum,
+                            type: 'bar',
+                            showBackground: true,
+                            backgroundStyle: {
+                                color: 'rgba(180, 180, 180, 0.2)'
+                            }
+                        }]
+                    };
+                    option && myChart.setOption(option);
+                }).catch()
+            },
             toBlogList() {
                 this.$router.push({
                     name: 'adminBlogList'
@@ -130,6 +194,7 @@
             },
             //加载文章列表
             loadArticleList() {
+
                 let data = {
                     "page": 1,
                     "size": 8
@@ -167,6 +232,11 @@
 <style lang="scss" scoped>
     .span-font {
         font-size: 16px;
+    }
+    .echarts-class{
+        background-color: #fff;
+        height: 200px;
+        box-shadow: 2px 2px 10px #909090;
     }
 
     .article-li {
