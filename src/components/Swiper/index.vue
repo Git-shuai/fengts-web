@@ -83,7 +83,7 @@
 
     .carousel {
         width: 100%;
-        height: 550px;
+        height: 400px;
         /*animation: zoomIn; !* referring directly to the animation's @keyframe declaration *!
         animation-duration: 1s; !* don't forget to set a duration! *!*/
     }

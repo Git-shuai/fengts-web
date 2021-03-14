@@ -5,7 +5,9 @@ import store from "./store";
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueAwesomeSwiper from 'vue-awesome-swiper'; //轮播图
-import Animated from 'animate.css';
+// import animated from 'animate.css'
+import 'wowjs/css/libs/animate.css'
+
 // import style
 import 'swiper/swiper-bundle.css';
 //引入icon图标库
@@ -26,9 +28,9 @@ Vue.prototype.$echarts = echarts
 // use
 Vue.use(mavonEditor);
 Vue.use(VueCookies);
+// Vue.use(animated);
 Vue.use(GlobalFun);
 Vue.use(VueAxios, axios);
-Vue.use(Animated);
 Vue.use(ElementUI);
 Vue.use(VueAwesomeSwiper);
 Vue.config.productionTip = false;
