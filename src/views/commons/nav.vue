@@ -49,7 +49,6 @@
                 routes: this.$router.options.routes,
                 logoImg: require('../../assets/logo.png')
             };
-
         },
         methods: {
             handleSelect(keyPath) {
