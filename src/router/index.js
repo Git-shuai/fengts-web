@@ -9,15 +9,12 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: "/",
-        name: "index",
-        meta: {
-            name: "首页",
-        },
+        redirect: "/index",
         status: 1,
         component: commons,
         children: [
             {
-                path: "/",
+                path: "/index",
                 name: "index",
                 meta: {
                     name: "首页",

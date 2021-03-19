@@ -3,18 +3,19 @@
         <!--LOGO图片-->
         <el-row>
             <el-col :offset="4" :span="2">
-                <div class="logo-menu">
-                    <img class="logo" src="../../assets/logo.jpg" width="100%" height="100%" alt="LOGO"/>
+                <div >
+                    <el-image class="logo-menu" :fit="'contain'" :src="logoImg"></el-image>
                 </div>
             </el-col>
             <el-col :span="15">
                 <div class="options-navMenu">
                     <!--菜单-->
-                    <el-menu :default-active="activeIndex"
-                             class="el-menu-demo"
-                             text-color="#000"
-                             mode="horizontal"
-                             active-text-color="#5e5bff"  router>
+                    <el-menu
+                            text-color="#000"
+                            mode="horizontal"
+                            :default-active="defaultActive"
+                            @select="handleSelect"
+                            active-text-color="#5e5bff" router>
                         <template v-for="item in routes">
                             <template v-if="item.status===1">
                                 <template v-if="item.children">
@@ -44,16 +45,22 @@
         name: "navIndex",
         data() {
             return {
-                activeIndex: '1',
-                activeIndex2: '1',
-                routes: this.$router.options.routes
+                defaultActive: '/index',
+                routes: this.$router.options.routes,
+                logoImg: require('../../assets/logo.png')
             };
 
         },
-
-        create: {},
         methods: {
-
+            handleSelect(keyPath) {
+                console.log(keyPath);
+                this.defaultActive = keyPath;
+            }
+        },
+        watch: {
+            $route() {
+                this.handleSelect(this.$route.path);
+            }
         }
     }
 </script>
@@ -69,14 +76,12 @@
     .logo-menu {
         float: left;
         height: $navMenu;
-        display: inline-block;
-        //可删除
-        width: 0.9*$navMenu;
     }
 
     .el-menu-nav {
         background-color: $mainColor;
         height: $navMenu;
+
         .el-menu-item:hover {
             background-color: $mainColor;
         }
@@ -94,9 +99,14 @@
         //可删除
         background-color: #83b99e;
     }
-    .search-icon{
+
+    .search-icon {
         line-height: $navMenu;
         font-size: 25px;
     }
 
+    /deep/ .el-menu-item {
+        border-bottom-color: #fff !important;
+        border-bottom: 0 !important;
+    }
 </style>

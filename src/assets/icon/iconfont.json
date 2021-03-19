@@ -6,6 +6,41 @@
   "description": "个人网站",
   "glyphs": [
     {
+      "icon_id": "8327186",
+      "name": "qq",
+      "font_class": "qq1",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "9186714",
+      "name": "QQ",
+      "font_class": "QQ",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "11983543",
+      "name": "github",
+      "font_class": "github1",
+      "unicode": "ea0b",
+      "unicode_decimal": 59915
+    },
+    {
+      "icon_id": "14929690",
+      "name": "邮箱 (1)",
+      "font_class": "youxiang1",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "18361007",
+      "name": "github",
+      "font_class": "github2",
+      "unicode": "e76f",
+      "unicode_decimal": 59247
+    },
+    {
       "icon_id": "17489144",
       "name": "API",
       "font_class": "API",
