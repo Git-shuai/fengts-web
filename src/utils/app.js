@@ -54,3 +54,27 @@ export function getIsCollapse() {
 export function removeIsCollapse() {
     return cookie.remove(IsCollapse);
 }
+
+export function setMenu(menuUrl) {
+    return cookie.set(menuList,JSON.stringify(menuUrl));
+}
+
+export function getMenu() {
+    return cookie.get(menuList);
+}
+
+export function removeMenu() {
+    return cookie.remove(menuList);
+}
+
+export function setIsCollapse(value) {
+    return cookie.set(IsCollapse,JSON.stringify(value));
+}
+
+export function getIsCollapse() {
+    return cookie.get(IsCollapse)==="true";
+}
+
+export function removeIsCollapse() {
+    return cookie.remove(IsCollapse);
+}
