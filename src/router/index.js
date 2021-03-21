@@ -30,21 +30,21 @@ const routes = [
                 },
                 component: () => import("../views/blog/index.vue")
             }, {
-                path: "/introduce",
-                name: "introduce",
+                path: "/classify",
+                name: "classify",
                 meta: {
-                    name: "简介",
-                    icon: "icon icongerenjianjie"
+                    name: "分类",
+                    icon: "icon iconcategory"
                 },
-                component: () => import("../views/introduce/index.vue")
+                component: () => import("../views/classify/index")
             }, {
-                path: "/life",
-                name: "life",
+                path: "/tag",
+                name: "tag",
                 meta: {
-                    name: "生活",
-                    icon: "icon iconicon"
+                    name: "标签",
+                    icon: "icon iconbiaoqian"
                 },
-                component: () => import("../views/life/index.vue")
+                component: () => import("../views/tag/index")
             }, {
                 path: "/contact",
                 name: "contact",
