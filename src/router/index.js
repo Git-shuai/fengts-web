@@ -46,14 +46,6 @@ const routes = [
                 },
                 component: () => import("../views/tag/index")
             }, {
-                path: "/contact",
-                name: "contact",
-                meta: {
-                    name: "关于我",
-                    icon: "icon iconbangzhuguanyuwomen"
-                },
-                component: () => import("../views/contact/index.vue")
-            }, {
                 path: "/message",
                 name: "message",
                 meta: {
@@ -61,6 +53,14 @@ const routes = [
                     icon: "icon iconweixin"
                 },
                 component: () => import("../views/message/index.vue")
+            }, {
+                path: "/contact",
+                name: "contact",
+                meta: {
+                    name: "关于我",
+                    icon: "icon iconbangzhuguanyuwomen"
+                },
+                component: () => import("../views/contact/index.vue")
             }
         ]
     },
