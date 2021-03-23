@@ -142,7 +142,6 @@
                     "roleName": this.roleForm.roleName,
                     "des": this.roleForm.des
                 };
-                console.log(data);
                 editRole(data).then((res)=>{
                     this.$message.success(res.data.message);
                     this.selectRoleList();

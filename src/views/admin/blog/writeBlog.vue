@@ -190,8 +190,6 @@
                         this.selectTagList = response.data.data.tagName;
                         this.selectClassifyList = response.data.data.classifyName;
 
-                        console.log(this.blogDetails);
-                        // console.log(this.selectClassifyList);
                     }).catch();
                 }
             },
@@ -230,7 +228,6 @@
 
             //打开窗口加载函数
             openDialog() {
-                console.log(this.blogDetails);
                 //tag标签初始化
                 selectTags().then((response) => {
                     this.tagList = response.data.data;
@@ -342,7 +339,6 @@
                     } else {
                         this.selectClassifyList.push(data);
                     }
-                    console.log(response.data.data);
                 }).catch()
             },
             //点击按钮添加分类 3
@@ -361,7 +357,6 @@
                 } else {
                     this.selectClassifyList.push(value);
                 }
-                console.log(this.selectClassifyList);
             },
             //删除分类按钮
             deleteClassify(value) {
@@ -415,7 +410,6 @@
                         "isComment": this.blogDetails.isComment,
                         "blogStatus": this.blogDetails.blogStatus
                     };
-                    console.log(data);
                     editBlog(data).then((response) => {
                         this.$message.success(response.data.message);
                         this.$router.push({

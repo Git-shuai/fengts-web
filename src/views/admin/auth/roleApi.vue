@@ -136,7 +136,6 @@
                     "roleId": this.roleObject.roleId,
                     "apiIds": this.apiIdList
                 };
-                console.log(data);
                 addAPIExp(data).then((response) => {
                     this.$message.success(response.data.message);
                     this.warningStatus = false;

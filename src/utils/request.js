@@ -10,7 +10,6 @@ const service = axios.create({
     timeout: 3000,
 });
 
-// console.log(process.env.VUE_APP_ABC);
 
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {

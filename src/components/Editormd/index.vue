@@ -64,7 +64,6 @@
                 this.$emit("update:content",this.blogContentValue);
             },
             content: function (val) {
-                console.log(val);
                 this.blogContentValue=val;
             }
         },

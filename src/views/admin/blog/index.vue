@@ -124,7 +124,6 @@
                 let data={
                     "batchId": this.blogIdList
                 };
-                console.log(data);
                 deleteBatchIdList(data).then((response) => {
                     this.$message.success(response.data.message);
                     this.selectBlogList();
@@ -173,9 +172,7 @@
                     "page": this.pagination.currentPage,
                     "size": this.pagination.pageSize
                 };
-                console.log(data);
                 selectBlogListByParam(data).then((res) => {
-                    console.log(res.data.data);
                     let data = res.data.data;
                     this.tableData = data.records;
                     this.pagination.total = data.total;
@@ -192,8 +189,6 @@
                 this.blogIdList = data;
             },
             handleSizeChange(val) {
-                console.log("handleSizeChange");
-                console.log(val);
                 this.pagination.pageSize = val;
                 if (this.judgeSelectParam()) {
                     this.submitForm();
@@ -202,8 +197,6 @@
                 }
             },
             handleCurrentChange(val) {
-                console.log("handleCurrentChange");
-                console.log(val);
                 this.pagination.currentPage = val;
                 if (this.judgeSelectParam()) {
                     this.submitForm();

@@ -52,7 +52,6 @@
         },
         methods: {
             handleSelect(keyPath) {
-                console.log(keyPath);
                 this.defaultActive = keyPath;
             }
         },

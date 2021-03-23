@@ -61,7 +61,6 @@
         name: "index",
         methods: {
             toOther(val){
-                console.log(val);
                 if (val==='1873461847'){
                     window.location.href='https://w.qq.com/'
                 }else if (val==='fengts10@163.com'){

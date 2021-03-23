@@ -63,7 +63,6 @@
         methods: {
             //跳转到图片指定的路径
             jump: function (value) {
-                console.log(value);
                 this.$router.push({
                     name: value.type,
                 })
