@@ -232,23 +232,17 @@ export default {
       let username='';
       let content='';
       if (onerow===undefined){
-        console.log(1)
         content= this.oneReply.content;
         username=this.oneReply.mailAddress !== '' ? (this.oneReply.mailAddress + this.oneReply.mailAddressPrepend) : "默认用户";
       }else if(perow===undefined){
-        console.log(2)
         content= this.twoReply.content;
         username=this.twoReply.mailAddress !== '' ? (this.twoReply.mailAddress + this.twoReply.mailAddressPrepend) : "默认用户";
         parentId=onerow.id;
       }else {
-        console.log(3)
         content= this.threeReply.content;
         username=this.threeReply.mailAddress !== '' ? (this.threeReply.mailAddress + this.threeReply.mailAddressPrepend) : "默认用户";
         parentId=perow.id;
       }
-      console.log(parentId)
-      console.log(username)
-      console.log(content)
       let data = {
         "parentId":parentId,
         "username": username,
