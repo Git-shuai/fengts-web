@@ -38,3 +38,16 @@ export function selectReplyListParentIsNotNull(data) {
         data: data
     });
 }
+
+/**
+ * 加载二级级留言
+ * @param data
+ * @returns
+ */
+export function addPraise(data) {
+    return service.request({
+        method: "post",
+        url: `/reply/addPraise/${data}`,
+        data: data
+    });
+}

@@ -9,14 +9,14 @@
         <el-form status-icon class="demo-ruleForm">
           <el-form-item>
             <div class="block-textarea">
-              <el-input type="textarea" :rows="5" placeholder="欢迎提出建议和问题，共同学习" v-model="content"></el-input>
+              <el-input type="textarea" :rows="5" placeholder="欢迎提出建议和问题，共同学习" v-model="oneReply.content"></el-input>
             </div>
           </el-form-item>
           <el-form-item>
             <div class="block-mail">
-              <el-input size="small" placeholder="请输入内容" v-model="mailAddress" class="input-with-select">
+              <el-input size="small" placeholder="请输入内容" v-model="oneReply.mailAddress" class="input-with-select">
                 <template slot="prepend">邮箱</template>
-                <el-select size="small" v-model="mailAddressPrepend" slot="append">
+                <el-select size="small" v-model="oneReply.mailAddressPrepend" slot="append">
                   <el-option label="@163.com" value="@163.com"></el-option>
                   <el-option label="@qq.com" value="@qq.com"></el-option>
                   <el-option label="@gmail.com" value="@gmail.com"></el-option>
@@ -56,8 +56,8 @@
               <div class="time-block">发布于{{ item.createTime }}</div>
               <!--              链接-->
               <div class="pull-right link-block">
-                <a class="a-class">赞({{ item.praiseNum }})</a>
-                <a class="a-class" @click="isShowReply(item)">回复(12)</a>
+<!--                <a class="a-class" >赞({{ item.praiseNum }})</a>-->
+                <a class="a-class" @click="isShowReply(item)">回复({{item.sum}})</a>
               </div>
             </div>
             <!-- 回复留言-->
@@ -72,20 +72,32 @@
                   <div class="time-block">发布于{{ item2.createTime }}</div>
                   <!--链接-->
                   <div class="pull-right link-block">
-                    <a class="a-class">赞({{ item2.praiseNum }})</a>
-                    <a class="a-class" @click="isShowReplyInputStatus(item2)">回复(12)</a>
+<!--                    <a class="a-class">赞({{ item2.praiseNum }})</a>-->
+                    <a class="a-class" @click="isShowReplyInputStatus(item2)">回复</a>
                   </div>
                   <!--回复留言的留言-->
                   <div v-if="item2.replyStatus" class="reply-input">
                     <el-form status-icon class="demo-ruleForm">
                       <el-form-item>
                         <div class="block-textarea">
-                          <el-input type="textarea" :rows="1" :placeholder="`回复${item2.username}`"
-                                    v-model="content"></el-input>
+                          <el-input type="textarea" :rows="1" :placeholder="`回复`"
+                                    v-model="threeReply.content"></el-input>
                         </div>
                       </el-form-item>
                       <el-form-item>
-                        <el-button class="pull-right" size="small" type="success" @click="addReply(item2)">提交评论
+                        <div class="block-mail">
+                          <el-input size="small" placeholder="请输入内容" v-model="threeReply.mailAddress" class="input-with-select">
+                            <template slot="prepend">邮箱</template>
+                            <el-select size="small" v-model="threeReply.mailAddressPrepend" slot="append">
+                              <el-option label="@163.com" value="@163.com"></el-option>
+                              <el-option label="@qq.com" value="@qq.com"></el-option>
+                              <el-option label="@gmail.com" value="@gmail.com"></el-option>
+                            </el-select>
+                          </el-input>
+                        </div>
+                      </el-form-item>
+                      <el-form-item>
+                        <el-button class="pull-right" size="small" type="success" @click="addReply(item,item2)">提交评论
                         </el-button>
                       </el-form-item>
                     </el-form>
@@ -99,14 +111,14 @@
                 <el-form status-icon class="demo-ruleForm">
                   <el-form-item>
                     <div class="block-textarea">
-                      <el-input type="textarea" :rows="1" placeholder="请输入你的观点" v-model="content"></el-input>
+                      <el-input type="textarea" :rows="1" placeholder="请输入你的观点" v-model="twoReply.content"></el-input>
                     </div>
                   </el-form-item>
                   <el-form-item>
                     <div class="block-mail">
-                      <el-input size="small" placeholder="请输入内容" v-model="mailAddress" class="input-with-select">
+                      <el-input size="small" placeholder="请输入内容" v-model="twoReply.mailAddress" class="input-with-select">
                         <template slot="prepend">邮箱</template>
-                        <el-select size="small" v-model="mailAddressPrepend" slot="append">
+                        <el-select size="small" v-model="twoReply.mailAddressPrepend" slot="append">
                           <el-option label="@163.com" value="@163.com"></el-option>
                           <el-option label="@qq.com" value="@qq.com"></el-option>
                           <el-option label="@gmail.com" value="@gmail.com"></el-option>
@@ -115,7 +127,7 @@
                     </div>
                   </el-form-item>
                   <el-form-item>
-                    <el-button class="pull-right" size="small" type="success" @click="addReply(item)">提交评论
+                    <el-button class="pull-right" size="small" type="success" @click="addReply(item,undefined)">提交评论
                     </el-button>
                   </el-form-item>
                 </el-form>
@@ -142,10 +154,24 @@ export default {
   },
   data() {
     return {
+      //保存一下一级留言的ID
+      oneId: '',
       replyList: [],
-      content: '',
-      mailAddress: '',
-      mailAddressPrepend: '@163.com',
+      oneReply:{
+        content: '',
+        mailAddress: '',
+        mailAddressPrepend: '@163.com',
+      },
+      twoReply:{
+        content: '',
+        mailAddress: '',
+        mailAddressPrepend: '@163.com',
+      },
+      threeReply:{
+        content: '',
+        mailAddress: '',
+        mailAddressPrepend: '@163.com',
+      },
     }
   },
   created() {
@@ -162,8 +188,10 @@ export default {
         row.reply2List = response.data.data;
         this.$forceUpdate();
       }).catch()
+
     },
     isShowReply(row) {
+      this.oneId=row.id;
       this.selectReplyListParentIsNotNull(row);
       //显示回复窗口
       if (row.replyStatus === 1) {
@@ -179,37 +207,69 @@ export default {
       } else {
         row.replyStatus = 1;
       }
-      console.log(row.replyStatus);
       this.$forceUpdate();
     },
+    clearInfo(){
+      this.oneReply={
+        content: '',
+        mailAddress: '',
+        mailAddressPrepend: '@163.com',
+      };
+      this.twoReply={
+        content: '',
+        mailAddress: '',
+        mailAddressPrepend: '@163.com',
+      };
+      this.threeReply={
+        content: '',
+        mailAddress: '',
+        mailAddressPrepend: '@163.com',
+      };
+    },
     //添加留言
-    addReply(row) {
-      if (this.content===''){
-        this.$message.warning("请输入留言内容")
-        return;
+    addReply(onerow,perow) {
+      let parentId='';
+      let username='';
+      let content='';
+      if (onerow===undefined){
+        console.log(1)
+        content= this.oneReply.content;
+        username=this.oneReply.mailAddress !== '' ? (this.oneReply.mailAddress + this.oneReply.mailAddressPrepend) : "默认用户";
+      }else if(perow===undefined){
+        console.log(2)
+        content= this.twoReply.content;
+        username=this.twoReply.mailAddress !== '' ? (this.twoReply.mailAddress + this.twoReply.mailAddressPrepend) : "默认用户";
+        parentId=onerow.id;
+      }else {
+        console.log(3)
+        content= this.threeReply.content;
+        username=this.threeReply.mailAddress !== '' ? (this.threeReply.mailAddress + this.threeReply.mailAddressPrepend) : "默认用户";
+        parentId=perow.id;
       }
+      console.log(parentId)
+      console.log(username)
+      console.log(content)
       let data = {
-        "parentId": row.id,
-        "username": this.mailAddress !== '' ? (this.mailAddress + this.mailAddressPrepend) : "默认用户",
-        "content": this.content
+        "parentId":parentId,
+        "username": username,
+        "content": content
       };
       addReply(data).then((response) => {
-        console.log(response);
         this.$message.success(response.data.message)
-        this.content = '';
-        this.mailAddress = '';
+        this.clearInfo();
+        if (onerow===undefined){
+          this.selectReplyList();
+        }else {
+          this.selectReplyListParentIsNotNull(onerow);
+        }
       }).catch()
-      //加载一级留言
-      if (row.id===''){
-        this.selectReplyList();
-      }else {
-        this.selectReplyListParentIsNotNull(row);
-      }
+
     },
     //加载留言
     selectReplyList() {
       selectReplyListParentIsNull().then((res) => {
         this.replyList = res.data.data;
+        this.$forceUpdate();
       }).catch()
     }
 
