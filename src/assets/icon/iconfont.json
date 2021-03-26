@@ -6,6 +6,20 @@
   "description": "个人网站",
   "glyphs": [
     {
+      "icon_id": "5064086",
+      "name": "分类",
+      "font_class": "fenlei",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "17930629",
+      "name": "标签",
+      "font_class": "biaoqian1",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
       "icon_id": "8327186",
       "name": "qq",
       "font_class": "qq1",

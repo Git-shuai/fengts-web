@@ -113,16 +113,7 @@
                 fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
             }
         },
-        mounted() {
-            let wow = new WOW({
-                boxClass: 'wow',
-                animateClass: 'animated',
-                offset: 40,
-                mobile: true,
-                live: true,
-            })
-            wow.init()
-        },
+
         mounted() {
             let wow = new WOW({
                 boxClass: 'wow',

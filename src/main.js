@@ -24,6 +24,8 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 
 import * as echarts from 'echarts'
+import tagCloud from 'v-tag-cloud'
+Vue.use(tagCloud)
 Vue.prototype.$echarts = echarts
 // use
 Vue.use(mavonEditor);

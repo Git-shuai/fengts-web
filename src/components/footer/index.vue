@@ -80,6 +80,7 @@
 
 <style lang="scss" scoped>
     .bottom-content {
+      margin-top: 50px;
         background-color: #ebf2f2;
         height: 280px;
     }
