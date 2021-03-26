@@ -241,11 +241,6 @@ export default {
     },
 
 
-
-
-
-
-
     handleSizeChange(val) {
       this.pagination.pageSize=val;
       this.blogList();
