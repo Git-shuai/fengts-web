@@ -65,6 +65,20 @@ const routes = [
         ]
     },
     {
+        path: "/blogInfo",
+        name: "blogInfo",
+        component: commons,
+        children: [{
+            path: "/blogInfo",
+            name: "blogInfo",
+            meta: {
+                name: "博客详情",
+                icon: "icon iconbangzhuguanyuwomen"
+            },
+            component: () => import("../views/blog/blogInfo")
+        }]
+    },
+    {
         path: "/login",
         name: "login",
         meta: {
@@ -157,7 +171,7 @@ const routes = [
                     icon: "icon iconicon_yonghuguanlisubscriber"
                 },
                 component: () => import("../views/admin/auth/userManage.vue")
-            },{
+            }, {
                 path: "/admin/roleManage",
                 name: "roleManage",
                 meta: {
@@ -165,7 +179,7 @@ const routes = [
                     icon: "icon iconnavicon-jsgl"
                 },
                 component: () => import("../views/admin/auth/roleManage.vue")
-            },{
+            }, {
                 path: "/admin/menuManage",
                 name: "menuManage",
                 meta: {
@@ -173,7 +187,7 @@ const routes = [
                     icon: "icon iconcaidan"
                 },
                 component: () => import("../views/admin/auth/menuManage.vue")
-            },{
+            }, {
                 path: "/admin/APIManage",
                 name: "APIManage",
                 meta: {
@@ -181,7 +195,7 @@ const routes = [
                     icon: "icon iconapi"
                 },
                 component: () => import("../views/admin/auth/APIManage.vue")
-            },{
+            }, {
                 path: "/admin/roleUser",
                 name: "roleUser",
                 meta: {
@@ -189,7 +203,7 @@ const routes = [
                     icon: "icon iconjiaoseyonghufenpei"
                 },
                 component: () => import("../views/admin/auth/roleUser.vue")
-            },{
+            }, {
                 path: "/admin/roleMenu",
                 name: "userMenu",
                 meta: {
@@ -197,7 +211,7 @@ const routes = [
                     icon: "icon iconmc-yhcd"
                 },
                 component: () => import("../views/admin/auth/roleMenu.vue")
-            },{
+            }, {
                 path: "/admin/roleApi",
                 name: "roleApi",
                 meta: {

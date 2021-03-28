@@ -10,13 +10,13 @@
             <div class="font-left">
               <div>
                 <span>文章</span>
-                <p>{{articleAndTag.blogCount}}</p>
+                <p>{{ articleAndTag.blogCount }}</p>
               </div>
             </div>
             <div class="font-right ">
               <div>
                 <span>标签</span>
-                <p>{{articleAndTag.tagsCount}}</p>
+                <p>{{ articleAndTag.tagsCount }}</p>
               </div>
             </div>
             <el-divider></el-divider>
@@ -34,10 +34,10 @@
                 <span>分类专栏</span>
               </div>
               <div>
-                <div v-for="item in classifyList" class="classify-title" :key="item.id">
+                <div v-for="item in classifyList" class="classify-title" :key="item.id" @click="toClassify(item)">
                   <el-avatar class="avatar" shape="square" :size="27" :src="squareUrl"></el-avatar>
                   <span class="font-title">{{ item.classifyName }}</span>
-                  <span class="font-num">{{item.count}}篇</span>
+                  <span class="font-num">{{ item.count }}篇</span>
                 </div>
               </div>
             </el-card>
@@ -51,7 +51,7 @@
             <div class="block">
               <el-carousel height="150px">
                 <el-carousel-item v-for="item in 4" :key="item">
-                  <el-image style="height: 150px" :fit="contain" :src="squareUrl"></el-image>
+                  <el-image style="height: 150px" :it="contain" :src="squareUrl"></el-image>
                 </el-carousel-item>
               </el-carousel>
             </div>
@@ -63,11 +63,13 @@
                 </div>
                 <div>
                   <!--每一个-->
-                  <div v-for="item in blogDataList"  class="blog-one" :key="item.id">
+                  <div v-for="item in blogDataList" class="blog-one" :key="item.id" @click="toBlog(item)">
                     <div class="blog-title">
                       <i class="el-icon-reading"></i><span>{{ item.title }}</span>
-                      <el-button v-if="item.isOriginal===0" class="blog-btn" size="mini" type="warning" plain>原创</el-button>
-                      <el-button v-else-if="item.isOriginal===1" class="blog-btn" size="mini" type="success" plain>转载</el-button>
+                      <el-button v-if="item.isOriginal===0" class="blog-btn" size="mini" type="warning" plain>原创
+                      </el-button>
+                      <el-button v-else-if="item.isOriginal===1" class="blog-btn" size="mini" type="success" plain>转载
+                      </el-button>
                       <el-button v-else eclass="blog-btn" size="mini" type="primary" plain>翻译</el-button>
                     </div>
                     <el-row :gutter="60">
@@ -75,7 +77,7 @@
                         <el-image class="blog-image" fit="fit" :src="squareUrl"></el-image>
                       </el-col>
                       <el-col :span="16">
-                        <div class="blog-content">{{item.content}}</div>
+                        <div class="blog-content">{{ item.content }}</div>
                         <div class="ava-time">
                           <el-avatar class="pull-left" :size="40" :src="squareUrl"></el-avatar>
                           <span class="auth-name">{{ item.auth }}</span>
@@ -112,7 +114,7 @@
                 <span>最新文章</span>
               </div>
               <div>
-                <div v-for="item in newArticleList" class="classify-title" :key="item.id">
+                <div v-for="item in newArticleList" class="classify-title" :key="item.id" @click="toBlog(item)">
                   <el-avatar class="avatar" shape="square" :size="27" :src="squareUrl"></el-avatar>
                   <span class="font-title">{{ item.title }}</span>
                   <span class="font-num"><i class="el-icon-view eyes-i"></i>{{ item.readNum }}</span>
@@ -127,7 +129,7 @@
                 <span>热门文章</span>
               </div>
               <div>
-                <div v-for="item in holeArticleList" class="classify-title" :key="item.id">
+                <div v-for="item in holeArticleList" class="classify-title" :key="item.id" @click="toBlog(item)">
                   <el-avatar class="avatar" shape="square" :size="27" :src="squareUrl"></el-avatar>
                   <span class="font-title">{{ item.title }}</span>
                   <span class="font-num"><i class="el-icon-view eyes-i"></i>{{ item.readNum }}</span>
@@ -179,10 +181,11 @@ export default {
       squareUrl: "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
       time: '2020-3-24',
       hotTag: [],
+      contain: 'contain',
       newArticleList: [],
       classifyList: [],
-      blogDataList:[],
-      articleAndTag:[],
+      blogDataList: [],
+      articleAndTag: [],
       holeArticleList: [],
       //分页数据
       pagination: {
@@ -214,43 +217,64 @@ export default {
         this.newArticleList = res.data.data.records;
       }).catch()
     },
-    classifyOfArticleNum(){
+    classifyOfArticleNum() {
       classifyOfArticleNum().then(res => {
-        this.classifyList=res.data.data;
+        this.classifyList = res.data.data;
       }).catch()
     },
-    articleAndTagNum(){
+    articleAndTagNum() {
       articleAndTagNum().then(res => {
-        this.articleAndTag=res.data.data;
+        this.articleAndTag = res.data.data;
       }).catch()
     },
-    blogList(){
-      let data={
+    blogList() {
+      let data = {
         "page": this.pagination.currentPage,
-        "size":this.pagination.pageSize
+        "size": this.pagination.pageSize
       };
       blogList(data).then(res => {
-        this.blogDataList=res.data.data.records;
-        this.pagination.total=res.data.data.total;
+        this.blogDataList = res.data.data.records;
+        this.pagination.total = res.data.data.total;
       }).catch()
     },
-    holdArticle(){
+    holdArticle() {
       holdArticle().then(res => {
-        this.holeArticleList=res.data.data.records;
+        this.holeArticleList = res.data.data.records;
       }).catch()
     },
 
 
     handleSizeChange(val) {
-      this.pagination.pageSize=val;
+      this.pagination.pageSize = val;
       this.blogList();
     },
     handleCurrentChange(val) {
-      this.pagination.currentPage=val;
+      this.pagination.currentPage = val;
       this.blogList();
     },
     clickTagItem(tag) {
-      console.log(tag);
+      this.$router.push({
+        name: "tag",
+        query: {
+          "id": tag.id
+        }
+      });
+    },
+    toBlog(val) {
+      this.$router.push({
+        name: "blogInfo",
+        query: {
+          "id": val.id
+        }
+      });
+    },
+    toClassify(val){
+      this.$router.push({
+        name: "classify",
+        query: {
+          "id": val.id
+        }
+      });
     }
   }
 }
@@ -375,11 +399,15 @@ export default {
     line-height: 27px;
     color: #8b9195;
   }
-  .eyes-i{
+
+  .eyes-i {
     margin-right: 5px;
   }
 
   margin: 15px;
+}
+.classify-title:hover{
+  cursor: pointer;
 }
 
 //博客列表
@@ -392,6 +420,10 @@ export default {
   margin: 30px 45px 30px 45px;
   height: 200px;
   background-color: #fcf7f7;
+}
+
+.blog-one:hover {
+  cursor: pointer;
 }
 
 .pagination-block {
@@ -414,7 +446,9 @@ export default {
     font-size: 16px;
   }
 }
-
+.blog-title:hover{
+  cursor: pointer;
+}
 .classify-font {
   font-size: 11px !important;
   color: #7f8284;

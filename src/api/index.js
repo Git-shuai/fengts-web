@@ -77,3 +77,55 @@ export function holdArticle(data) {
         data: data
     });
 }
+
+/**
+ * 查询标签（）
+ * @param data
+ * @returns
+ */
+export function selectTag(data) {
+    return service.request({
+        method: "get",
+        url: "/blogTag/selectTag",
+        data: data
+    });
+}
+
+/**
+ * 查询标签（）
+ * @param data
+ * @returns
+ */
+export function selectBlogListByTag(data) {
+    return service.request({
+        method: "post",
+        url: "/blogTag/selectBlogListByTag",
+        data: data
+    });
+}
+
+/**
+ * 查询标签（）
+ * @param data
+ * @returns
+ */
+export function selectClassify(data) {
+    return service.request({
+        method: "get",
+        url: "/blogClassify/selectClassify",
+        data: data
+    });
+}
+
+/**
+ * 查询标签（）
+ * @param data
+ * @returns
+ */
+export function selectBlogListByClassify(data) {
+    return service.request({
+        method: "post",
+        url: "/blogClassify/selectBlogListByClassify",
+        data: data
+    });
+}

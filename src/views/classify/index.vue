@@ -7,208 +7,36 @@
         <div class=" classify-title"><i class="icon iconcategory"></i>文章分类</div>
         <div class="classify-tags">
           <div class="classify-item">
-            <el-button>默认分类</el-button>
+            <el-button @click="selectBlogListByClassify()" :class="classifyDataId===undefined ? 'active':''">
+              <span>全部</span>
+            </el-button>
           </div>
-          <div class="classify-item">
-            <el-button>默认分类</el-button>
-          </div>
-          <div class="classify-item">
-            <el-button>默认分类</el-button>
-          </div>
-          <div class="classify-item">
-            <el-button>默认分类</el-button>
-          </div>
-          <div class="classify-item">
-            <el-button>默认分类</el-button>
-          </div>
-          <div class="classify-item">
-            <el-button>默认分类</el-button>
-          </div>
-          <div class="classify-item">
-            <el-button>默认分类默认分类</el-button>
-          </div>
-          <div class="classify-item">
-            <el-button>默认分类</el-button>
-          </div>
-          <div class="classify-item">
-            <el-button>默认分类</el-button>
-          </div>
-          <div class="classify-item">
-            <el-button>默认分类</el-button>
+          <div v-for="item in classifyList" :key="item.id" class="classify-item">
+            <el-button :class="{'active': classifyDataId===item.id}" @click="toClassify(item)">
+              {{ item.classifyName }}<span>{{ item.num }}</span></el-button>
           </div>
         </div>
-
       </div>
       <!-- 分类文章列表-->
       <div class="classify-list">
-        <div class="wow fadeInUp classify-list-item">
+        <div v-for="item in blogList" :key="item.id" class="wow fadeInUp classify-list-item" @click="toBlog(item)">
           <el-image class="img-item" :src="src"></el-image>
-          <div class="article-title">文章标题</div>
+          <div class="article-title">{{ item.title }}</div>
           <div>
-            <div class="article-user"><i class="el-icon-user"></i><span>作者</span></div>
-            <div class="article-time"><i class="el-icon-time"></i>{{ time }}</div>
+            <div class="article-user"><i class="el-icon-user"></i><span>{{ item.auth }}</span></div>
+            <div class="article-time"><i class="el-icon-time"></i>{{ item.createTime }}</div>
           </div>
           <el-divider></el-divider>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
+          <div v-for="(item,index) in item.tagName" :key="index" class="article-tags">
+            <i class="el-icon-collection-tag"></i><span>{{ item }}</span>
           </div>
         </div>
-        <div class="wow fadeInUp classify-list-item">
-          <el-image class="img-item" :src="src"></el-image>
-          <div class="article-title">文章标题</div>
-          <div>
-            <div class="article-user"><i class="el-icon-user"></i><span>作者</span></div>
-            <div class="article-time"><i class="el-icon-time"></i>{{ time }}</div>
-          </div>
-          <el-divider></el-divider>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-        </div>
-        <div class="wow fadeInUp classify-list-item">
-          <el-image class="img-item" :src="src"></el-image>
-          <div class="article-title">文章标题</div>
-          <div>
-            <div class="article-user"><i class="el-icon-user"></i><span>作者</span></div>
-            <div class="article-time"><i class="el-icon-time"></i>{{ time }}</div>
-          </div>
-          <el-divider></el-divider>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-        </div>
-        <div class="wow fadeInUp classify-list-item">
-          <el-image class="img-item" :src="src"></el-image>
-          <div class="article-title">文章标题</div>
-          <div>
-            <div class="article-user"><i class="el-icon-user"></i><span>作者</span></div>
-            <div class="article-time"><i class="el-icon-time"></i>{{ time }}</div>
-          </div>
-          <el-divider></el-divider>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-        </div>
-        <div class="wow fadeInUp classify-list-item">
-          <el-image class="img-item" :src="src"></el-image>
-          <div class="article-title">文章标题</div>
-          <div>
-            <div class="article-user"><i class="el-icon-user"></i><span>作者</span></div>
-            <div class="article-time"><i class="el-icon-time"></i>{{ time }}</div>
-          </div>
-          <el-divider></el-divider>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-        </div>
-        <div class="wow fadeInUp classify-list-item">
-          <el-image class="img-item" :src="src"></el-image>
-          <div class="article-title">文章标题</div>
-          <div>
-            <div class="article-user"><i class="el-icon-user"></i><span>作者</span></div>
-            <div class="article-time"><i class="el-icon-time"></i>{{ time }}</div>
-          </div>
-          <el-divider></el-divider>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-        </div>
-        <div class="wow fadeInUp classify-list-item">
-          <el-image class="img-item" :src="src"></el-image>
-          <div class="article-title">文章标题</div>
-          <div>
-            <div class="article-user"><i class="el-icon-user"></i><span>作者</span></div>
-            <div class="article-time"><i class="el-icon-time"></i>{{ time }}</div>
-          </div>
-          <el-divider></el-divider>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-        </div>
-        <div class="wow fadeInUp classify-list-item">
-          <el-image class="img-item" :src="src"></el-image>
-          <div class="article-title">文章标题</div>
-          <div>
-            <div class="article-user"><i class="el-icon-user"></i><span>作者</span></div>
-            <div class="article-time"><i class="el-icon-time"></i>{{ time }}</div>
-          </div>
-          <el-divider></el-divider>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-        </div>
-        <div class="wow fadeInUp classify-list-item">
-          <el-image class="img-item" :src="src"></el-image>
-          <div class="article-title">文章标题</div>
-          <div>
-            <div class="article-user"><i class="el-icon-user"></i><span>作者</span></div>
-            <div class="article-time"><i class="el-icon-time"></i>{{ time }}</div>
-          </div>
-          <el-divider></el-divider>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-          <div class="article-tags">
-            <i class="el-icon-collection-tag"></i><span>标签</span>
-          </div>
-        </div>
+
         <!--分页-->
         <div class="wow fadeInUp pa-block">
           <div class="pagination-block">
             <el-pagination
                 background
-                @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="pagination.currentPage"
                 :page-sizes="pagination.pageSizes"
@@ -221,19 +49,25 @@
 
       </div>
     </div>
-    <div class="wow fadeInUp">    <Footer/>    </div>
+    <div class="wow fadeInUp">
+      <Footer/>
+    </div>
   </div>
 </template>
 
 <script>
 import Footer from '../../components/footer'
 import {WOW} from "wowjs";
+import {selectBlogListByClassify, selectClassify} from "api";
+
 export default {
   name: "index",
-  components:{
+  components: {
     Footer
   },
   mounted() {
+    console.log("mounted");
+    console.log(this.classifyDataId);
     let wow = new WOW({
       boxClass: 'wow',
       animateClass: 'animated',
@@ -247,20 +81,67 @@ export default {
     return {
       src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
       time: '2020-4-1',
+      classifyList: [],
+      blogList: [],
+      classifyDataId: this.$route.query.id,
       //分页数据
       pagination: {
         currentPage: 1,
         hideOnSinglePage: false,
-        pageSizes: [8, 15, 30, 40],
-        pageSize: 8,
+        pageSize: 9,
         total: 50
       }
+    }
+  },
+  created() {
+    console.log("created");
+    console.log(this.classifyDataId);
+    this.selectClassify();
+    this.selectBlogListByClassify(this.classifyDataId);
+  },
+  methods: {
+    selectClassify() {
+      selectClassify().then(res => {
+        this.classifyList = res.data.data;
+      }).catch()
+    },
+    //查询列表
+    selectBlogListByClassify(id) {
+      this.classifyDataId = id;
+      let data = {
+        "classifyId": id,
+        "page": this.pagination.currentPage,
+        "size": this.pagination.pageSize
+      };
+      selectBlogListByClassify(data).then(res => {
+        this.blogList = res.data.data.records;
+        this.pagination.total = res.data.data.total;
+      }).catch()
+    },
+    toClassify(val) {
+      this.selectBlogListByClassify(val.id);
+    },
+    handleCurrentChange(val) {
+      this.pagination.currentPage = val;
+      this.selectBlogListByTag(this.classifyDataId);
+    },
+    toBlog(val) {
+      this.$router.push({
+        name: "blogInfo",
+        query: {
+          "id": val.id
+        }
+      });
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.active {
+  color: #007efd;
+}
+
 .classify-main {
   .picture-div {
     background: #007efd;
@@ -294,6 +175,7 @@ export default {
   i {
     margin-right: 10px;
   }
+
   padding-top: 20px;
   width: 150px;
   margin: 20px auto;
@@ -311,6 +193,10 @@ export default {
 .classify-item {
   display: inline-block;
   margin: 10px 20px;
+
+  span {
+    margin-left: 10px;
+  }
 }
 
 .classify-list-item {
@@ -319,6 +205,10 @@ export default {
   width: 25%;
   margin: 30px 53px 30px 53px;
   box-shadow: 5px 5px 5px 5px #cfd4d4;
+}
+
+.classify-list-item:hover {
+  cursor: pointer;
 }
 
 .article-title {
@@ -338,7 +228,6 @@ export default {
 
 .article-user {
   display: inline-block;
-  float: right;
   color: #90939a;
   font-size: 18px;
 
@@ -370,9 +259,11 @@ export default {
   margin-right: 53px;
   margin-top: 30px;
 }
-.pa-block{
+
+.pa-block {
   height: 100px;
 }
+
 /deep/ .el-button {
   background: #e7e8ea;
 }

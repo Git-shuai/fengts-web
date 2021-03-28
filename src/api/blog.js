@@ -307,3 +307,4 @@ export function deleteBatchIdList(data) {
         data: data
     });
 }
+
