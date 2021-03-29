@@ -22,10 +22,16 @@
             <el-divider></el-divider>
             <!--      图标-->
             <div class="icon-group">
-              <i class="icon icongithub2"></i>
+              <i class="icon icongithub2" @click="toOther()"></i>
               <i class="icon iconyouxiang1"></i>
-              <i class="icon iconqq1"></i>
-              <i class="icon iconweixin"></i>
+              <el-popover placement="top" width="150" trigger="hover">
+                <el-image style="width: 150px;height: 150px" :src="QQUrl"></el-image>
+                <i class="icon iconqq1" slot="reference"></i>
+              </el-popover>
+              <el-popover placement="top" width="150" trigger="hover">
+                <el-image style="width: 150px;height: 150px" :src="WecharUrl"></el-image>
+                <i class="icon iconweixin" slot="reference"></i>
+              </el-popover>
             </div>
           </div>
           <div class="classify-block">
@@ -151,7 +157,21 @@
         </div>
       </el-col>
     </el-row>
-
+    <el-backtop target=".blog-block" :bottom="100">
+      <div
+          style="{
+        height: 100%;
+        width: 100%;
+        background-color: #f2f5f6;
+        box-shadow: 0 0 6px rgba(0,0,0, .12);
+        text-align: center;
+        line-height: 40px;
+        color: #1989fa;
+      }"
+      >
+        UP
+      </div>
+    </el-backtop>
     <Footer></Footer>
   </div>
 </template>
@@ -179,6 +199,8 @@ export default {
   data() {
     return {
       squareUrl: "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
+      QQUrl: "/image/QQ.png",
+      WecharUrl: "/image/wechar.jpg",
       time: '2020-3-24',
       hotTag: [],
       contain: 'contain',
@@ -268,13 +290,16 @@ export default {
         }
       });
     },
-    toClassify(val){
+    toClassify(val) {
       this.$router.push({
         name: "classify",
         query: {
           "id": val.id
         }
       });
+    },
+    toOther() {
+      window.location.href = 'https://github.com/Git-shuai/fengts-web'
     }
   }
 }
@@ -287,11 +312,11 @@ export default {
 
 .blog-block {
   margin-top: 30px;
-
   .blog-left {
   }
 
   .blog-center {
+
   }
 
   .blog-right {
@@ -365,6 +390,11 @@ export default {
   margin-left: 40px;
   margin-top: 20px;
 
+  .icon-img {
+    width: 50px;
+    height: 50px;
+  }
+
   i {
     cursor: pointer;
     font-size: 32px;
@@ -406,7 +436,8 @@ export default {
 
   margin: 15px;
 }
-.classify-title:hover{
+
+.classify-title:hover {
   cursor: pointer;
 }
 
@@ -446,9 +477,11 @@ export default {
     font-size: 16px;
   }
 }
-.blog-title:hover{
+
+.blog-title:hover {
   cursor: pointer;
 }
+
 .classify-font {
   font-size: 11px !important;
   color: #7f8284;

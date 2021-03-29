@@ -70,7 +70,7 @@
 
                         </div>
                     </div>
-                    <el-image class="img-block" :fit="'fill'" :src="lianxiSrc" @click="toRouter('contact')"></el-image>
+                    <el-image class="img-block" :fit="'fill'" :src="lianxiSrc"></el-image>
                 </div>
             </div>
         </div>
@@ -113,7 +113,6 @@
                 fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
             }
         },
-
         mounted() {
             let wow = new WOW({
                 boxClass: 'wow',
@@ -125,7 +124,11 @@
             wow.init()
         },
         methods: {
-
+          toRouter(val){
+            this.$router.push({
+              name: val
+            })
+          }
         }
     }
 </script>
@@ -149,7 +152,6 @@
     .content-font {
         font-size: 20px;
         font-family: "楷体";
-
         p {
             margin: 5px;
         }

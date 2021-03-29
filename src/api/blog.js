@@ -243,6 +243,19 @@ export function selectBlogById(data) {
 }
 
 /**
+ * 查询博客详情
+ * @param data
+ * @returns
+ */
+export function selectBlogByIdId(data) {
+    return service.request({
+        method: "post",
+        url: "/blog/select/selectBlogById",
+        data: data
+    });
+}
+
+/**
  * 添加博客信息
  * @param data
  * @returns
@@ -308,3 +321,15 @@ export function deleteBatchIdList(data) {
     });
 }
 
+/**
+ * 批量删除（）
+ * @param data
+ * @returns
+ */
+export function baseUploadImage(data) {
+    return service.request({
+        method: "post",
+        url: "/upload/uploadOss",
+        data: data
+    });
+}
