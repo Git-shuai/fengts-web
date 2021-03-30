@@ -206,6 +206,8 @@
                     "isComment": "0",
                     "blogStatus": "草稿箱"
                 };
+              console.log(data);
+              return false;
                 addBlog(data).then((response) => {
                     this.$message.success(response.data.message);
                     this.$router.push({

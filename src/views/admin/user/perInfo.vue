@@ -5,7 +5,6 @@
         <span>账号设置</span>
       </div>
       <div>
-
         <div class="user-info">
           <el-form :inline="true" :model="userInfo" class="demo-form-inline">
             <el-form-item label="用户头像 :">
@@ -16,7 +15,7 @@
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload">
-                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <img v-if="userInfo.headurl"  :src="userInfo.headurl" class="avatar" alt="用户头像">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
@@ -105,11 +104,11 @@ export default {
       }
     };
     return {
-      imageUrl: '',
       userInfo: {
         userId: '',
         username: '',
-        password: ''
+        password: '',
+        headurl:''
       },
       newUser: {
         userId: '',
@@ -139,6 +138,7 @@ export default {
       let userName = getUsername();
       queryUserByUsername(userName).then((res) => {
         this.userInfo = res.data.data;
+        console.log(this.userInfo);
       }).catch()
     },
     //按钮
@@ -185,14 +185,15 @@ export default {
     upLoad(file) {
       const formData = new FormData();
       formData.append('file', file.file);
+      formData.append('id', this.userInfo.userId);
       baseUploadImage(formData).then(res=>{
-        this.imageUrl=res.data.data;
+        this.userInfo.headurl=res.data.data;
       }).catch()
 
     },
     handleAvatarSuccess(res, file) {
       console.log(res);
-      this.imageUrl = URL.createObjectURL(file.raw);
+      this.userInfo.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';

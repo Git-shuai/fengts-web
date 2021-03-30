@@ -7,6 +7,7 @@ const token="Authorization";
 const username="fengtsUser";
 const menuList="menuList";
 const IsCollapse="IsCollapse";
+const userHeadUrl="userHeadUrl";
 
 export function setToken(Authorization) {
  return cookie.set(token,Authorization);
@@ -53,6 +54,14 @@ export function getIsCollapse() {
 
 export function removeIsCollapse() {
     return cookie.remove(IsCollapse);
+}
+
+export function setUserHeadUrl(value) {
+    return cookie.set(userHeadUrl,value);
+}
+
+export function getUserHeadUrl() {
+    return cookie.get(userHeadUrl);
 }
 
 

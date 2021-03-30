@@ -329,7 +329,28 @@ export function deleteBatchIdList(data) {
 export function baseUploadImage(data) {
     return service.request({
         method: "post",
+        url: "/upload/uploadImageOfUserRul",
+        data: data
+    });
+}
+
+export function uploadOss(data) {
+    return service.request({
+        method: "post",
         url: "/upload/uploadOss",
+        data: data
+    });
+}
+
+/**
+ * 批量删除（）
+ * @param data
+ * @returns
+ */
+export function selectBlogReadNum(data) {
+    return service.request({
+        method: "post",
+        url: "/blog/select/selectBlogReadNum",
         data: data
     });
 }
