@@ -8,10 +8,23 @@
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column prop="title" label="标题" width="180"></el-table-column>
                 <el-table-column prop="auth" label="作者" width="180"></el-table-column>
-                <el-table-column prop="blogStatus" label="状态" width="100"></el-table-column>
-                <el-table-column prop="classifyName" label="分类" width="180"></el-table-column>
-                <el-table-column prop="tagName" label="标签" width="180"></el-table-column>
-                <el-table-column sortable prop="name" label="评论" width="100"></el-table-column>
+                <el-table-column prop="blogStatus" label="状态" width="100">
+                  <template slot-scope="scope">
+                    <el-tag style="margin: 5px;padding: 0 5px" type="danger"><span style="line-height: 32px;">{{scope.row.blogStatus}}</span></el-tag>
+                  </template>
+                </el-table-column>
+              <el-table-column prop="classifyName" label="分类" width="200">
+                <template slot-scope="scope">
+                  <el-tag style="margin: 5px;padding: 0 5px" v-for="item in scope.row.classifyName" :key="item.id"><span
+                      style="line-height: 32px;">{{ item }}</span></el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column prop="tagName" label="标签" width="250">
+                <template slot-scope="scope">
+                  <el-tag style="margin: 5px;padding: 0 5px" v-for="item in scope.row.tagName" type="success" :key="item.id">
+                    <span style="line-height: 32px;">{{ item }}</span></el-tag>
+                </template>
+              </el-table-column>
                 <el-table-column sortable prop="readNum" label="访问" width="100"></el-table-column>
                 <el-table-column sortable prop="createTime" label="发布时间" width="180"></el-table-column>
                 <el-table-column prop="address" label="操作">

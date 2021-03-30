@@ -25,8 +25,14 @@
               <div class="icon-group">
                 <i class="icon icongithub2"></i>
                 <i class="icon iconyouxiang1"></i>
-                <i class="icon iconqq1"></i>
-                <i class="icon iconweixin"></i>
+                <el-popover placement="top" width="150" trigger="hover">
+                  <el-image style="width: 150px;height: 150px" :src="QQUrl"></el-image>
+                  <i class="icon iconqq1" slot="reference"></i>
+                </el-popover>
+                <el-popover placement="top" width="150" trigger="hover">
+                  <el-image style="width: 150px;height: 150px" :src="WecharUrl"></el-image>
+                  <i class="icon iconweixin" slot="reference"></i>
+                </el-popover>
               </div>
             </div>
             <div class="classify-block">
@@ -50,7 +56,7 @@
             <!--走马灯-->
             <div class="blog-content">
               <div class="blog-title">
-                {{blogData.title}}
+                {{ blogData.title }}
               </div>
               <div class="blog-info-div">
                 <span>作者:{{ blogData.auth }}</span>
@@ -59,8 +65,12 @@
               </div>
               <el-divider></el-divider>
               <div class="classify-tag">
-                <div class="back-classifyTag" v-for="item in blogData.classifyName" :key="item.id"><i class="icon iconcategory"></i>{{ item }}</div>
-                <div class="back-classifyTag" v-for="item in blogData.tagName" :key="item.id"><i class="el-icon-collection-tag"></i>{{ item }}</div>
+                <div class="back-classifyTag" v-for="item in blogData.classifyName" :key="item.id"><i
+                    class="icon iconcategory"></i>{{ item }}
+                </div>
+                <div class="back-classifyTag" v-for="item in blogData.tagName" :key="item.id"><i
+                    class="el-icon-collection-tag"></i>{{ item }}
+                </div>
               </div>
               <div class="btn-original">
                 <el-button v-if="true" size="mini" type="primary">原创</el-button>
@@ -86,46 +96,46 @@
               </div>
 
             </div>
-<!--            <div class="comment-block">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span>评论</span>
-                </div>
-                <div class="input-block">
-                  <el-form status-icon>
-                    <el-form-item>
-                      <div class="block-textarea">
-                        <el-input type="textarea" :rows="3" v-model="replyData.content"
-                                  placeholder="欢迎提出建议和问题，共同学习"></el-input>
-                      </div>
-                    </el-form-item>
-                    <el-form-item>
-                      <div class="block-mail">
-                        <el-input size="small" placeholder="例如:12345@163.com" v-model="replyData.address">
-                          <template slot="prepend">邮箱</template>
-                        </el-input>
-                      </div>
-                    </el-form-item>
-                    <el-form-item>
-                      <el-button class="block-textarea" size="mini" type="success" @click="toComment">提交评论</el-button>
-                    </el-form-item>
-                  </el-form>
-                </div>
-              </el-card>
-            </div>
-            <div class="comment-block">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span>评论内容</span>
-                </div>
-                <div>
-                  评论内容
-                  评论内容
-                  评论内容
-                  评论内容
-                </div>
-              </el-card>
-            </div>-->
+            <!--            <div class="comment-block">
+                          <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                              <span>评论</span>
+                            </div>
+                            <div class="input-block">
+                              <el-form status-icon>
+                                <el-form-item>
+                                  <div class="block-textarea">
+                                    <el-input type="textarea" :rows="3" v-model="replyData.content"
+                                              placeholder="欢迎提出建议和问题，共同学习"></el-input>
+                                  </div>
+                                </el-form-item>
+                                <el-form-item>
+                                  <div class="block-mail">
+                                    <el-input size="small" placeholder="例如:12345@163.com" v-model="replyData.address">
+                                      <template slot="prepend">邮箱</template>
+                                    </el-input>
+                                  </div>
+                                </el-form-item>
+                                <el-form-item>
+                                  <el-button class="block-textarea" size="mini" type="success" @click="toComment">提交评论</el-button>
+                                </el-form-item>
+                              </el-form>
+                            </div>
+                          </el-card>
+                        </div>
+                        <div class="comment-block">
+                          <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                              <span>评论内容</span>
+                            </div>
+                            <div>
+                              评论内容
+                              评论内容
+                              评论内容
+                              评论内容
+                            </div>
+                          </el-card>
+                        </div>-->
           </div>
         </el-col>
         <el-col :span="7">
@@ -138,7 +148,7 @@
                 </div>
                 <div>
                   <div v-for="item in newArticleList" class="classify-title" :key="item.id" @click="toBlog(item)">
-                    <el-avatar class="avatar" shape="square" :size="27" :src="squareUrl"></el-avatar>
+                    <el-avatar class="avatar" shape="square" :size="27" :src="item.blogUrl"></el-avatar>
                     <span class="font-title">{{ item.title }}</span>
                     <span class="font-num"><i class="el-icon-view eyes-i"></i>{{ item.readNum }}</span>
                   </div>
@@ -146,15 +156,15 @@
                 </div>
               </el-card>
             </div>
-<!--            <div class="tag-cloud">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span>目录</span>
-                </div>
-                <div class="js-toc">
-                </div>
-              </el-card>
-            </div>-->
+            <!--            <div class="tag-cloud">
+                          <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                              <span>目录</span>
+                            </div>
+                            <div class="js-toc">
+                            </div>
+                          </el-card>
+                        </div>-->
           </div>
         </el-col>
       </el-row>
@@ -188,7 +198,8 @@ import "mavon-editor/dist/css/index.css"
 import Footer from "@c/footer";
 import {WOW} from "wowjs";
 import {articleAndTagNum, classifyOfArticleNum, holdArticle, newArticle, tagCloud} from "api";
-import { selectBlogByIdId} from "api/blog";
+import {selectBlogByIdId} from "api/blog";
+
 export default {
   name: "blogInfo",
   components: {
@@ -206,6 +217,8 @@ export default {
   },
   data() {
     return {
+      QQUrl: "/image/QQ.png",
+      WecharUrl: "/image/wechar.jpg",
       toolbarsOption: {
         background: "#fff",
         bold: true, // 粗体
@@ -273,12 +286,12 @@ export default {
   },
   methods: {
     //加载博客
-    loadBlog(val){
-      let data={
+    loadBlog(val) {
+      let data = {
         "blogId": val
       };
-      selectBlogByIdId(data).then(res=>{
-        this.blogData=res.data.data;
+      selectBlogByIdId(data).then(res => {
+        this.blogData = res.data.data;
         console.log(res);
       }).catch()
     },
@@ -335,15 +348,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mavon-editor{
+.mavon-editor {
   min-height: 600px;
   padding-bottom: 30px;
 }
-.back-classifyTag{
+
+.back-classifyTag {
   background-color: #ecefef;
   padding: 5px;
   border-radius: 5px;
 }
+
 .block-mail {
   width: 400px;
   margin: 5px;
@@ -528,6 +543,11 @@ export default {
   .font-title {
     margin-left: 10px;
     line-height: 27px;
+    display: inline-block;
+    width: 170px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .font-num {
@@ -648,7 +668,8 @@ export default {
 .el-carousel__item:nth-child(2n+1) {
   background-color: #d3dce6;
 }
-/deep/.v-note-wrapper{
+
+/deep/ .v-note-wrapper {
   border: none;
 }
 </style>

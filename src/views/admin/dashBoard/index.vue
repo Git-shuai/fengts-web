@@ -94,12 +94,10 @@
               </el-tab-pane>
               <el-tab-pane label="最新评论">
                 <el-tabs>
-                  <el-tab-pane label="文章" name="first">
-                    文章
-                  </el-tab-pane>
-                  <el-tab-pane label="评论" name="second">
-                    页面
-                  </el-tab-pane>
+                    <el-table :data="replyData" style="width: 100%">
+                      <el-table-column prop="username" label="留言人" width="180"></el-table-column>
+                      <el-table-column prop="content" label="留言内容"></el-table-column>
+                    </el-table>
                 </el-tabs>
               </el-tab-pane>
             </el-tabs>
@@ -123,7 +121,13 @@
 </template>
 
 <script>
-import {selectBlogList, selectBlogListOfEcharts, selectBlogReadNum, selectBlogTagClassify} from "../../../api/blog";
+import {
+  selectBlogList,
+  selectBlogListOfEcharts,
+  selectBlogReadNum,
+  selectBlogTagClassify,
+  selectCommentList
+} from "../../../api/blog";
 import {selectUserList} from "../../../api/auth";
 
 export default {
@@ -135,6 +139,7 @@ export default {
       readNum: '0',
       userNum: '0',
       articleList: [],
+      replyData:[],
       blogMon: [],
       blogNum: [],
     }
@@ -143,6 +148,7 @@ export default {
     this.loadArticleList();
     this.selectUserList();
     this.selectBlogReadNum();
+    this.selectCommentList();
   },
   mounted() {
     this.loadEcharts();
@@ -207,6 +213,12 @@ export default {
       }).catch()
     },
     //加载评论列表
+    selectCommentList(){
+      selectCommentList().then(res=>{
+        this.commentNum=res.data.data.total;
+        this.replyData=res.data.data.records;
+      }).catch()
+    },
     //加载阅读量
     selectBlogReadNum(){
       selectBlogReadNum().then(res=>{

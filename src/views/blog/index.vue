@@ -56,8 +56,8 @@
           <div>
             <div class="block">
               <el-carousel height="150px">
-                <el-carousel-item v-for="item in 4" :key="item">
-                  <el-image style="height: 150px" :it="contain" :src="squareUrl"></el-image>
+                <el-carousel-item v-for="item in carouselList" :key="item.id">
+                  <el-image style="height: 150px" fit="fill"  :src="item.url" ></el-image>
                 </el-carousel-item>
               </el-carousel>
             </div>
@@ -80,7 +80,7 @@
                     </div>
                     <el-row :gutter="60">
                       <el-col :span="8">
-                        <el-image class="blog-image" fit="fit" :src="squareUrl"></el-image>
+                        <el-image class="blog-image" fit="fit" :src="item.blogUrl"></el-image>
                       </el-col>
                       <el-col :span="16">
                         <div class="blog-content">{{ item.content }}</div>
@@ -121,7 +121,7 @@
               </div>
               <div>
                 <div v-for="item in newArticleList" class="classify-title" :key="item.id" @click="toBlog(item)">
-                  <el-avatar class="avatar" shape="square" :size="27" :src="squareUrl"></el-avatar>
+                  <el-avatar class="avatar" shape="square" :size="27" :src="item.blogUrl"></el-avatar>
                   <span class="font-title">{{ item.title }}</span>
                   <span class="font-num"><i class="el-icon-view eyes-i"></i>{{ item.readNum }}</span>
                 </div>
@@ -136,7 +136,7 @@
               </div>
               <div>
                 <div v-for="item in holeArticleList" class="classify-title" :key="item.id" @click="toBlog(item)">
-                  <el-avatar class="avatar" shape="square" :size="27" :src="squareUrl"></el-avatar>
+                  <el-avatar class="avatar" shape="square" :size="27" :src="item.blogUrl"></el-avatar>
                   <span class="font-title">{{ item.title }}</span>
                   <span class="font-num"><i class="el-icon-view eyes-i"></i>{{ item.readNum }}</span>
                 </div>
@@ -180,6 +180,8 @@
 import Footer from "../../components/footer";
 import {WOW} from 'wowjs'
 import {articleAndTagNum, blogList, classifyOfArticleNum, holdArticle, newArticle, tagCloud} from "api";
+import {getUserHeadUrl} from "@/utils/app";
+import {selectCarousel} from "api/blog";
 
 export default {
   name: "index",
@@ -198,7 +200,8 @@ export default {
   },
   data() {
     return {
-      squareUrl: "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
+      carouselList:[],
+      squareUrl: getUserHeadUrl(),
       QQUrl: "/image/QQ.png",
       WecharUrl: "/image/wechar.jpg",
       time: '2020-3-24',
@@ -226,6 +229,7 @@ export default {
     this.blogList();
     this.articleAndTagNum();
     this.holdArticle();
+    this.loadUrl();
   },
   methods: {
     //标签云
@@ -300,6 +304,12 @@ export default {
     },
     toOther() {
       window.location.href = 'https://github.com/Git-shuai/fengts-web'
+    },
+    loadUrl() {
+      selectCarousel().then(res => {
+        this.carouselList = res.data.data;
+        // console.log(this.carouselList);
+      }).catch()
     }
   }
 }
@@ -422,6 +432,11 @@ export default {
   .font-title {
     margin-left: 10px;
     line-height: 27px;
+    display: inline-block;
+    width: 170px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .font-num {

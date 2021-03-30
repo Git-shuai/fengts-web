@@ -354,3 +354,19 @@ export function selectBlogReadNum(data) {
         data: data
     });
 }
+
+export function selectCarousel(data) {
+    return service.request({
+        method: "get",
+        url: "/blog/select/selectCarousel",
+        data: data
+    });
+}
+
+export function selectCommentList(data) {
+    return service.request({
+        method: "get",
+        url: "/blog/select/selectCommentList",
+        data: data
+    });
+}

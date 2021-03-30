@@ -17,7 +17,7 @@
       <!-- 标签文章列表-->
       <div class="tag-list">
         <div v-for="item in blogList" :key="item.id" class="wow fadeInUp tag-list-item" @click="toBlog(item)">
-          <el-image class="img-item" :src="src"></el-image>
+          <el-image class="img-item" :src="item.blogUrl"></el-image>
           <div class="article-title">{{ item.title }}</div>
           <div>
             <div class="article-user"><i class="el-icon-user"></i><span>{{ item.auth }}</span></div>
@@ -245,6 +245,8 @@ export default {
 
 .img-item {
   border-radius: 5px;
+  width: 325px;
+  height: 219px;
 }
 
 .pagination-block {
