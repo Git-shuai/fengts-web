@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 
 import commons from "../views/index";
 import admin from "../views/admin/comment/index"
+import Error from  "../views/error/error"
 
 Vue.use(VueRouter);
 
@@ -272,6 +273,11 @@ const routes = [
                 component: () => import("../views/admin/recycle/draft")
             }
         ]
+    },
+    {
+        path: '*',
+        name: 'error',
+        component: Error
     }
 
 ];
