@@ -31,7 +31,7 @@
                       label-width="100px"
                       class="demo-ruleForm">
                     <el-form-item label="用户名" prop="username">
-                      <el-input type="username" v-model="ruleForm.username" placeholder="邮箱、手机"
+                      <el-input type="username" v-model="ruleForm.username" placeholder="邮箱"
                                 autocomplete="off" clearable></el-input>
                     </el-form-item>
                     <el-form-item label="密码" prop="password">
@@ -324,8 +324,8 @@ export default {
         "username": value
       };
       getCode(data).then((response) => {
-        console.log(response.data.data);
-        this.$message.success("验证码是 " + response.data.data.code);
+        // console.log(response.data.data);
+        // this.$message.success("验证码是 " + response.data.data.code);
       }).catch((error) => {
         console.log(error);
       });
